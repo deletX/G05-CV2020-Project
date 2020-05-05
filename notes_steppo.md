@@ -3,9 +3,9 @@
 Roba interessante dai papers degli studenti dell'anno scorso
 
 Index: 
-* [01.pdf](#01.pdf)
-* [02.pdf](#02.pdf)
-* [03.pdf](#03.pdf)
+* [01.pdf](#01pdf)
+* [02.pdf](#02pdf)
+* [03.pdf](#03pdf)
 
 - [Note](#Note)
 
