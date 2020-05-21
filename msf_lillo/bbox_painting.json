@@ -1,0 +1,636 @@
+{
+	"01.jpg": [
+		{
+			x: 696,
+			y: 0,
+			width: 985,
+			height: 1440,
+			painting: "Redentore benedicente,Bastiani Lazzaro (?) (Venezia  1449 ca. - 1512)"
+		},
+		{
+			x: 1993,
+			y:49,
+			width: 539,
+			height: 1373,
+			painting: "Madonna col Bambino  santi e donatori,Catena Vincenzo (attr.) (Venezia  1480 ca. - 1531)"
+		}
+	],
+	"02.jpg": [
+		{
+			x: 823 ,
+			y: 526,
+			width: 132 ,
+			height: 183,
+			painting: ""
+		},
+		{
+			x: 0 ,
+			y: 0,
+			width: 484 ,
+			height: 942,
+			painting: "L'incoronazione della Vergine e santi,Agnolo degli Erri  (Modena 1462 ca. 1466) - EXTENSION"
+		},
+		{
+			x: 1393 ,
+			y: 115,
+			width: 223 ,
+			height: 947,
+			painting: "Sant'Antonio da Padova Tura Cosme' (Ferrara 1430 ca. - 1495)"
+		},
+	],
+	"03.jpg": [
+		{
+			x: 221 ,
+			y: 23,
+			width: 623 ,
+			height: 1037,
+			painting: "Gesu crocifisso Reni Guido (Bologna 1575 - 1642)"
+		},
+		{
+			x: 917,
+			y: 75,
+			width: 331,
+			height: 877,
+			painting: "San Rocco in carcere Reni Guido (Bologna  1575 - 1642) - EXTENSION"
+		},
+		{
+			x: 1259,
+			y: 365,
+			width: 191,
+			height: 525,
+			painting: ""
+		},
+		{
+			x: 1453,
+			y: 561,
+			width: 101,
+			height: 299,
+			painting: ""
+		},
+		{
+			x: 1649,
+			y: 535,
+			width: 137,
+			height: 109,
+			painting: ""
+		},
+		{
+			x: 1653,
+			y: 679,
+			width: 141,
+			height: 109,
+			painting: ""
+		},
+	],
+	"04.jpg": [
+		{
+			x: 0 ,
+			y: 71,
+			width: 608 ,
+			height: 705,
+			painting: "Apparizione dei tre angeli ad Abramo Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)"
+		},
+		{
+			x: 673 ,
+			y: 91,
+			width: 819 ,
+			height: 727,
+			painting: "Ultima cena Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)"
+		},
+		{
+			x: 1383 ,
+			y: 289,
+			width: 527 ,
+			height: 567,
+			painting: "Apparizione dell'angelo a Elia Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)"
+		},
+	],
+	"05.jpg": [
+		{
+			x: 169 ,
+			y: 383,
+			width: 749 ,
+			height: 697,
+			painting: ""
+		},
+		{
+			x: 1253 ,
+			y: 521,
+			width: 251,
+			height: 377,
+			painting: ""
+		},
+		{
+			x: 1241 ,
+			y: 0,
+			width: 243 ,
+			height: 370,
+			painting: ""
+		},
+		{
+			x: 107 ,
+			y: 0,
+			width: 843 ,
+			height: 308,
+			painting: ""
+		},
+	],
+	"06.jpg": [
+		{
+			x: 0 ,
+			y: 153,
+			width: 268 ,
+			height: 757,
+			painting: "Madonna col Bambino e i santi Sebastiano e Giorgio (?) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 417 ,
+			y: 49,
+			width: 415,
+			height: 467,
+			painting: "La Musica (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 657 ,
+			y: 351,
+			width: 367 ,
+			height: 457,
+			painting: "L'Ebbrezza (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 879 ,
+			y: 157,
+			width: 299,
+			height: 387,
+			painting: "La Conversazione (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 1055,
+			y: 409,
+			width: 249,
+			height: 369,
+			painting: "La Seduzione (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 1195 ,
+			y: 245,
+			width: 209,
+			height: 319,
+			painting: "L'Amore (o L'Abbraccio) (Figure allegoriche) Luteri Giovanni di Niccolo detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)"
+		},
+		{
+			x: 1445 ,
+			y: 335,
+			width: 169,
+			height: 491,
+			painting: ""
+		},
+		{
+			x: 1649 ,
+			y: 289,
+			width: 237,
+			height: 517,
+			painting: ""
+		},
+	],
+	"07.jpg": [
+		{
+			x: 0 ,
+			y: 450,
+			width: 178 ,
+			height: 358,
+			painting: ""
+		},
+		{
+			x: 190,
+			y: 593,
+			width: 121,
+			height: 226,
+			painting: ""
+		},
+		{
+			x: 441,
+			y: 420,
+			width: 86,
+			height: 174,
+			painting: ""
+		},
+		{
+			x: 517,
+			y: 377,
+			width: 110,
+			height: 196,
+			painting: "Priapo insidia Lotide addormentata Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 610,
+			y: 318,
+			width: 135,
+			height: 234,
+			painting: "Giove ed Europa Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 748,
+			y: 242,
+			width: 177,
+			height: 278,
+			painting: "Vulcano  Minerva e Amore (La nascita di Erittonio) Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 949,
+			y: 143,
+			width: 240,
+			height: 334,
+			painting: ""
+		},
+		{
+			x: 1223,
+			y: 29,
+			width: 350,
+			height: 385,
+			painting: "Strage dei figli di Niobe Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 421,
+			y: 611,
+			width: 79,
+			height: 194,
+			painting: ""
+		},
+		{
+			x: 493,
+			y: 592,
+			width: 105,
+			height: 225,
+			painting: "La dea Latona trasforma i contadini della Licia in rane Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 593,
+			y: 571,
+			width: 137,
+			height: 265,
+			painting: ""
+		},
+		{
+			x: 731,
+			y: 539,
+			width: 189,
+			height: 317,
+			painting: "Caduta di Fetonte Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 939,
+			y: 492,
+			width: 264,
+			height: 393,
+			painting: "Piramo e Tisbe Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		{
+			x: 1245,
+			y: 420,
+			width: 383,
+			height: 473,
+			painting: "Il giudizio di Mida Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)"
+		},
+		
+	],
+	"08.jpg": [
+		{
+			x: 756 ,
+			y: 400,
+			width: 318,
+			height: 429,
+			painting: ""
+		},
+		{
+			x: 436,
+			y: 483,
+			width: 185,
+			height: 306,
+			painting: ""
+		},
+	],
+	"09.jpg": [
+		{
+			x: 1572 ,
+			y: 458,
+			width: 126,
+			height: 222,
+			painting: ""
+		},
+		{
+			x: 1722,
+			y: 328,
+			width: 198,
+			height: 461,
+			painting: "Giuditta con la testa di Oloferne Bertucci Giacomo detto Jacopone da Faenza (Faenza  1502 - 1579)"
+		},
+	],
+	"10.jpg": [],
+	"11.jpg": [
+		{
+			x: 0,
+			y: 287,
+			width: 117,
+			height: 327,
+			painting: ""
+		},
+		{
+			x:  289,
+			y:  443,
+			width: 195,
+			height: 171,
+			painting: ""
+		},
+		{
+			x: 335,
+			y: 225,
+			width: 131,
+			height: 163,
+			painting: ""
+		},
+		{
+			x:  435,
+			y: 455,
+			width: 155,
+			height: 169,
+			painting: ""
+		},
+		{
+			x: 551 ,
+			y: 247,
+			width: 143,
+			height: 191,
+			painting: ""
+		},
+		{
+			x:  729,
+			y:  489,
+			width: 113,
+			height: 119,
+			painting: ""
+		},
+		{
+			x:  749,
+			y:  303,
+			width:  83,
+			height: 137,
+			painting: ""
+		},
+		{
+			x:  903,
+			y:  491,
+			width: 87,
+			height: 119,
+			painting: ""
+		},
+		{
+			x: 891,
+			y: 327,
+			width: 111,
+			height: 143,
+			painting: ""
+		},
+		{
+			x:  1023,
+			y: 499,
+			width: 67,
+			height: 109,
+			painting: ""
+		},
+		{
+			x:  1025,
+			y:  367,
+			width: 67,
+			height: 115,
+			painting: ""
+		},
+		{
+			x:  1197,
+			y:  589,
+			width: 69,
+			height: 73,
+			painting: ""
+		},
+		{
+			x:  1213,
+			y: 497,
+			width: 97,
+			height: 75,
+			painting: ""
+		},
+		{
+			x: 1161,
+			y: 259,
+			width: 143,
+			height: 133,
+			painting: ""
+		},
+		{
+			x:  1223,
+			y: 523,
+			width: 101,
+			height: 77,
+			painting: ""
+		},
+		{
+			x:  1225,
+			y: 417,
+			width: 97,
+			height: 77,
+			painting: ""
+		},
+		{
+			x: 1355 ,
+			y: 515,
+			width: 71,
+			height: 91,
+			painting: ""
+		},
+		{
+			x: 1339 ,
+			y: 411,
+			width: 105,
+			height: 77,
+			painting: ""
+		},
+		{
+			x: 1351 ,
+			y: 241,
+			width: 163,
+			height: 135,
+			painting: ""
+		},
+		{
+			x:  1477,
+			y: 509,
+			width: 79,
+			height: 105,
+			painting: ""
+		},
+		{
+			x:  1461,
+			y: 405,
+			width: 111,
+			height: 83,
+			painting: ""
+		},
+		{
+			x: 1807,
+			y: 431,
+			width: 51,
+			height: 63,
+			painting: ""
+		},
+		{
+			x: 1805 ,
+			y: 515,
+			width: 57,
+			height: 91,
+			painting: ""
+		},
+	],
+	"12.jpg": [
+		{
+			x: 631,
+			y: 151,
+			width: 715,
+			height: 679,
+			painting: ""
+		},],
+	"13.jpg": [
+		{
+			x: 0,
+			y: 43,
+			width: 245,
+			height: 1027,
+			painting: ""
+		},
+		{
+			x: 479,
+			y: 0,
+			width: 931,
+			height: 1080,
+			painting: ""
+		},
+		{
+			x: 1629,
+			y: 0,
+			width: 291,
+			height: 1080,
+			painting: ""
+		},
+	],
+	"14.jpg": [
+		{
+			x: 157,
+			y: 133,
+			width: 1613,
+			height: 947,
+			painting: ""
+		},
+	],
+	"15.jpg": [
+		{
+			x: 317,
+			y: 15,
+			width: 1179,
+			height: 955,
+			painting: ""
+		},
+	],
+	"16.jpg": [
+		{
+			x: 0,
+			y: 0,
+			width: 484,
+			height: 922,
+			painting: ""
+		},
+		{
+			x: 505,
+			y: 0,
+			width: 785,
+			height: 1070,
+			painting: ""
+		},
+	],
+	"17.jpg": [
+		{
+			x: 351,
+			y: 237,
+			width: 353,
+			height: 327,
+			painting: "Ritratto di Maria Farnese d'Este Suttermans Justus (attr.) (Anversa  1597 - Firenze  1681)"
+		},
+		{
+			x: 779,
+			y: 283,
+			width: 317,
+			height: 287,
+			painting: ""
+		},
+		{
+			x: 1161,
+			y: 243,
+			width: 351,
+			height: 331,
+			painting: "Ritratto della principessa Anna Maria Maurizia d'Asburgo Pourbus Frans II il Giovane (Anversa  1569 - Parigi  1622)"
+		},
+		{
+			x: 243,
+			y: 639,
+			width: 705,
+			height: 441,
+			painting: "Ritratto di Quaranta Malvasia Sabatini Lorenzo (Bologna  1530 ca. - Roma  1576)"
+		},
+		{
+			x: 1097,
+			y: 741,
+			width: 499,
+			height: 399,
+			painting: ""
+		},
+		{
+			x: 1657,
+			y: 697,
+			width: 173,
+			height: 305,
+			painting: ""
+		},
+	],
+	"18.jpg": [
+		{
+			x: 205,
+			y: 265,
+			width: 1243,
+			height: 645,
+			painting: ""
+		},
+	],
+	"19.jpg": [
+		{
+			x: 369,
+			y: 0,
+			width: 849,
+			height: 1080,
+			painting: ""
+		},
+		{
+			x: 1387,
+			y: 295,
+			width: 533,
+			height: 785,
+			painting: ""
+		},
+	],
+	"20.jpg": [
+		{
+			x: 79,
+			y: 0,
+			width: 1609,
+			height: 1064,
+			painting: "La Regina Tomiri fa immergere nel sangue la testa di Ciro Ferrari Luca detto Luca da Reggio (Reggio Emilia  1599 - Padova  1654)"
+		},
+	]
+}
