@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 
+
 def get_contours(frame):
     img_cnts = frame.copy()
     img_blur = cv2.GaussianBlur(frame, (7, 7), 1)
@@ -13,10 +14,10 @@ def get_contours(frame):
     bbox_list = []
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        area_min = 10000
+        area_min = 6000
         if area > area_min:
             peri = cv2.arcLength(cnt, True)
-            approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+            approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
             print(len(approx))
             if len(approx) == 4:
                 x, y, w, h = cv2.boundingRect(approx)
@@ -29,7 +30,8 @@ def get_contours(frame):
 
 
 def main():
-    cap = cv2.VideoCapture('detection\canny_hough\VIRB0401.MP4')
+    cap = cv2.VideoCapture('./VIRB0401.MP4')
+    #bboxes = []
     if not cap.isOpened():
         print('Cannot open camera')
     cap.set(3, 600)
@@ -39,12 +41,15 @@ def main():
         if not ret:
             break
         bbox_list, img_cnts = get_contours(frame)
+        #bboxes.append(bbox_list)
         cv2.imshow("Result", img_cnts)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
     cap.release()
     cv2.destroyAllWindows()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+
+

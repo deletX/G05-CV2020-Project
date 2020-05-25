@@ -1,9 +1,10 @@
-from canny_hough.painting_detection import get_contours as p_d_bbox
-from threshold_ccl.threshold_ccl import run_frame as t_ccl_bbox
-import json
 from statistics import mean
-import cv2
 import copy
+from detection.canny_hough.painting_detection import get_contours as p_d_bbox
+from detection.threshold_ccl.threshold_ccl import run_frame as t_ccl_bbox
+import cv2
+import json
+
 
 def setup():
     """
@@ -12,17 +13,16 @@ def setup():
     p_d_bboxes = {}
     t_ccl_bboxes = {}
     for i in range(1, 28):
-            t_ccl_frame = cv2.imread("detection\\threshold_ccl\\input\\{0:0=2d}.jpg".format(i),
-                                cv2.IMREAD_UNCHANGED)
-            p_d_frame = cv2.imread("detection\\canny_hough\\input\\{0:0=2d}.jpg".format(i),
-                                cv2.IMREAD_UNCHANGED)
+        t_ccl_frame = cv2.imread("./threshold_ccl/input/{0:0=2d}.jpg".format(i), cv2.IMREAD_UNCHANGED)
+        p_d_frame = cv2.imread("./canny_hough/input/{0:0=2d}.jpg".format(i),
+                            cv2.IMREAD_UNCHANGED)
 
-            p_d_bbox_list, _ = p_d_bbox(p_d_frame)
+        p_d_bbox_list, _ = p_d_bbox(p_d_frame)
 
-            t_ccl_bbox_list, _ = t_ccl_bbox(t_ccl_frame)
+        t_ccl_bbox_list, _ = t_ccl_bbox(t_ccl_frame)
 
-            p_d_bboxes["{0:0=2d}.jpg".format(i)] = p_d_bbox_list
-            t_ccl_bboxes["{0:0=2d}.jpg".format(i)] = t_ccl_bbox_list
+        p_d_bboxes["{0:0=2d}.jpg".format(i)] = p_d_bbox_list
+        t_ccl_bboxes["{0:0=2d}.jpg".format(i)] = t_ccl_bbox_list
 
     return p_d_bboxes,t_ccl_bboxes
 
@@ -57,13 +57,14 @@ def calc_iou(consider_undetected_paintings=True, verbose=False):
     Notes:
         Questo algoritmo cerca la bbox nel gt più vicina (manhattan distance) e poi ne calcola l'IoU.
     """
-    if verbose: print("Running setup")
+    if verbose:
+        print("Running setup")
     pd_bboxes, tccl_bboxes = setup()
     pd_ious = []
     tccl_ious = []
 
     if verbose: print("Loading ground truth")
-    with open('msf_lillo\\bbox_painting.json') as json_file:
+    with open('./../msf_lillo/bbox_painting.json') as json_file:
         ground_truth = json.load(json_file)
 
     for key in ground_truth:
@@ -73,50 +74,62 @@ def calc_iou(consider_undetected_paintings=True, verbose=False):
     gt_pd = ground_truth
     gt_tccl = copy.deepcopy(ground_truth)
 
-    if verbose: print("Starting")
+    if verbose:
+        print("Starting")
     for i in range(1, 21):
         if verbose: print("{0:0=2d}.jpg".format(i))
         gt_pd_bbox = gt_pd["{0:0=2d}.jpg".format(i)]
         gt_ttcl_bbox = gt_tccl["{0:0=2d}.jpg".format(i)]
         pd_bbox = pd_bboxes["{0:0=2d}.jpg".format(i)]
         tccl_bbox = tccl_bboxes["{0:0=2d}.jpg".format(i)]
-        if verbose: print("checking painting_detection bbox list for {0:0=2d}.jpg".format(i))
+        if verbose:
+            print("checking painting_detection bbox list for {0:0=2d}.jpg".format(i))
         for bbox in pd_bbox:
-            gt_pd_bbox.sort(key = lambda val: abs(bbox['x']-val["x"])+abs(bbox["y"]-val["y"]))
-            if len(gt_pd_bbox)>0:
+            gt_pd_bbox.sort(key=lambda val: abs(bbox['x']-val["x"])+abs(bbox["y"]-val["y"]))
+            if len(gt_pd_bbox) > 0:
                 gt = gt_pd_bbox[0]
-                iou =__iou__(gt,bbox)
-                gt["detected"]=True
+                iou = __iou__(gt, bbox)
+                gt["detected"] = True
             else:
-                iou=0
-            if verbose: print("Ground truth bbox: \n {} \n Bbox: \n {}\n iou: {}".format(gt,bbox,iou))
+                iou = 0
+            if verbose:
+                print("Ground truth bbox: \n {} \n Bbox: \n {}\n iou: {}".format(gt, bbox, iou))
             pd_ious.append(iou)
 
-        if verbose: print("checking threshold_ccl bbox list for {0:0=2d}.jpg".format(i))
+        if verbose:
+            print("checking threshold_ccl bbox list for {0:0=2d}.jpg".format(i))
         for bbox in tccl_bbox:
-            gt_ttcl_bbox.sort(key = lambda val: abs(bbox["x"]-val["x"])+abs(bbox["y"]-val["y"]))
-            if len(gt_ttcl_bbox)>0:
+            gt_ttcl_bbox.sort(key=lambda val: abs(bbox["x"]-val["x"])+abs(bbox["y"]-val["y"]))
+            if len(gt_ttcl_bbox) > 0:
                 gt = gt_ttcl_bbox[0]
-                iou =__iou__(gt,bbox)
-                gt["detected"]=True
+                iou = __iou__(gt, bbox)
+                gt["detected"] = True
             else:
                 iou=0
-            if verbose: print("Ground truth bbox: \n {} \n Bbox: \n {}\n iou: {}".format(gt,bbox,iou))
+            if verbose:
+                print("Ground truth bbox: \n {} \n Bbox: \n {}\n iou: {}".format(gt, bbox, iou))
             tccl_ious.append(iou)      
 
     if consider_undetected_paintings:
         for key in gt_pd:
             for item in gt_pd[key]:
-                if item["detected"] == False: pd_ious.append(0)
+                if item["detected"] == False:
+                    pd_ious.append(0)
         for key in gt_tccl:
             for item in gt_tccl[key]:
-                if item["detected"] == False: tccl_ious.append(0)
+                if item["detected"] == False:
+                    tccl_ious.append(0)
     
     mean_pd = mean(pd_ious)
     mean_tccl = mean(tccl_ious)
-    if verbose: print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}".format(mean_pd,mean_tccl))
+    if verbose:
+        print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}".format(mean_pd, mean_tccl))
     return mean(pd_ious), mean(tccl_ious)   
 
-if __name__ == "__main__":
+
+def main():
     print(calc_iou(consider_undetected_paintings=True, verbose=True))
-    
+
+
+if __name__ == "__main__":
+    main()
