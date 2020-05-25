@@ -20,7 +20,7 @@ def get_contours(frame):
             print(len(approx))
             if len(approx) == 4:
                 x, y, w, h = cv2.boundingRect(approx)
-                bbox = {'x': x, 'y': y, 'h': h, 'w': w}
+                bbox = {'x': x, 'y': y, 'height': h, 'width': w}
                 bbox_list.append(bbox)
                 cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (0, 255, 0), 5)
                 cv2.putText(img_cnts, "Area: " + str(int(area)), (x + w + 20, y + 20),
