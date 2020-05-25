@@ -29,7 +29,7 @@ def get_contours(frame):
 
 
 def main():
-    cap = cv2.VideoCapture('./VIRB0401.MP4')
+    cap = cv2.VideoCapture('detection\canny_hough\VIRB0401.MP4')
     if not cap.isOpened():
         print('Cannot open camera')
     cap.set(3, 600)
