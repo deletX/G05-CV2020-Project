@@ -1,2 +1,27 @@
-# CV30LperNick
-#okdoit
+# Computer Vision Project 2020
+[Intro]
+
+## Painting Detection
+...
+
+
+
+## Painting Rectification
+...
+
+
+
+## Painting Retrieval
+...
+
+
+
+## People Detection
+...
+
+
+
+## People Localization
+...
+
+
