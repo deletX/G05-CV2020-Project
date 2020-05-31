@@ -1,7 +1,7 @@
 from statistics import mean
 import copy
-from canny_hough.painting_detection import get_contours as p_d_bbox
-from threshold_ccl.threshold_ccl import run_frame as t_ccl_bbox
+from detection.canny_hough.painting_detection import get_contours as p_d_bbox
+from detection.threshold_ccl.threshold_ccl import run_frame as t_ccl_bbox
 import cv2
 import json
 
@@ -12,8 +12,8 @@ def setup():
     p_d_bboxes = {}
     t_ccl_bboxes = {}
     for i in range(1, 28):
-        t_ccl_frame = cv2.imread("./detection/threshold_ccl/input/{0:0=2d}.jpg".format(i), cv2.IMREAD_UNCHANGED)
-        p_d_frame = cv2.imread("./detection/canny_hough/input/{0:0=2d}.jpg".format(i),
+        t_ccl_frame = cv2.imread("./threshold_ccl/input/{0:0=2d}.jpg".format(i), cv2.IMREAD_UNCHANGED)
+        p_d_frame = cv2.imread("./canny_hough/input/{0:0=2d}.jpg".format(i),
                             cv2.IMREAD_UNCHANGED)
 
         p_d_bbox_list, _ = p_d_bbox(p_d_frame)
@@ -63,7 +63,7 @@ def calc_iou(true_positive_iou_threshold=0.5, verbose=False):
     tccl_ious = []
 
     if verbose: print("Loading ground truth")
-    with open('./msf_lillo/bbox_painting.json') as json_file:
+    with open('./../msf_lillo/bbox_painting.json') as json_file:
         ground_truth = json.load(json_file)
 
     for key in ground_truth:
