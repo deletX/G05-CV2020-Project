@@ -48,7 +48,7 @@ def __iou__(gt_bbox, ev_bbox):
     return intersection/union
 
 
-def calc_iou(consider_undetected_paintings=True, verbose=False):
+def calc_iou(true_positive_iou_threshold=0.5, verbose=False):
     """
     Calcola la media delle IoU in base alle bbox trovate rispetto alle "Ground truth" definite nel file msf_lillo\\bbox_painting.json
 
@@ -70,10 +70,17 @@ def calc_iou(consider_undetected_paintings=True, verbose=False):
     for key in ground_truth:
         for item in ground_truth[key]:
             item["detected"]=False
-   
+
     gt_pd = ground_truth
     gt_tccl = copy.deepcopy(ground_truth)
 
+    pd_TP=0
+    pd_FP=0
+    pd_FN=0
+    tccl_TP=0
+    tccl_FP=0
+    tccl_FN=0
+    
     if verbose:
         print("Starting")
     for i in range(1, 21):
@@ -89,7 +96,11 @@ def calc_iou(consider_undetected_paintings=True, verbose=False):
             if len(gt_pd_bbox) > 0:
                 gt = gt_pd_bbox[0]
                 iou = __iou__(gt, bbox)
-                gt["detected"] = True
+                if(iou > true_positive_iou_threshold):
+                    gt["detected"] = True
+                    pd_TP += 1
+                else:
+                    pd_FP += 1
             else:
                 iou = 0
             if verbose:
@@ -103,32 +114,45 @@ def calc_iou(consider_undetected_paintings=True, verbose=False):
             if len(gt_ttcl_bbox) > 0:
                 gt = gt_ttcl_bbox[0]
                 iou = __iou__(gt, bbox)
-                gt["detected"] = True
+                if(iou > true_positive_iou_threshold):
+                    gt["detected"] = True
+                    tccl_TP += 1
+                else:
+                    tccl_FP += 1
             else:
                 iou=0
             if verbose:
                 print("Ground truth bbox: \n {} \n Bbox: \n {}\n iou: {}".format(gt, bbox, iou))
             tccl_ious.append(iou)      
 
-    if consider_undetected_paintings:
-        for key in gt_pd:
-            for item in gt_pd[key]:
-                if item["detected"] == False:
-                    pd_ious.append(0)
-        for key in gt_tccl:
-            for item in gt_tccl[key]:
-                if item["detected"] == False:
-                    tccl_ious.append(0)
+
+    for key in gt_pd:
+        for item in gt_pd[key]:
+            if item["detected"] == False:
+                pd_FN += 1
+
+    for key in gt_tccl:
+        for item in gt_tccl[key]:
+            if item["detected"] == False:
+                tccl_FN += 1
     
+    pd_prec = pd_TP / (pd_TP + pd_FP)
+    pd_rec = pd_TP / (pd_TP + pd_FN)
+    pd_F1 = 2*(pd_prec*pd_rec)/(pd_prec+pd_rec)
+    
+    tccl_prec = tccl_TP / (tccl_TP + tccl_FP)
+    tccl_rec = tccl_TP / (tccl_TP + tccl_FN)
+    tccl_F1 = 2*(tccl_prec*tccl_rec)/(tccl_prec+tccl_rec)
+
     mean_pd = mean(pd_ious)
     mean_tccl = mean(tccl_ious)
     if verbose:
-        print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}".format(mean_pd, mean_tccl))
+        print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}\npainting_detection precision {}; recall {}; F1: {}.\threshold_ccl precision {}; recall {}; F1: {}".format(mean_pd, mean_tccl,pd_prec,pd_rec,pd_F1,tccl_prec,tccl_rec,tccl_F1))
     return mean(pd_ious), mean(tccl_ious)   
 
 
 def main():
-    print(calc_iou(consider_undetected_paintings=True, verbose=True))
+    print(calc_iou(verbose=True))
 
 
 if __name__ == "__main__":
