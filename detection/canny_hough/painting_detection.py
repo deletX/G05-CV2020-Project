@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 
 
-
 def get_contours(frame):
     img_cnts = frame.copy()
     img_blur = cv2.GaussianBlur(frame, (7, 7), 1)
@@ -21,7 +20,7 @@ def get_contours(frame):
             print(len(approx))
             if len(approx) == 4:
                 x, y, w, h = cv2.boundingRect(approx)
-                bbox = {'x': x, 'y': y, 'height': h, 'width': w}
+                bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
                 bbox_list.append(bbox)
                 cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (0, 255, 0), 5)
                 cv2.putText(img_cnts, "Area: " + str(int(area)), (x + w + 20, y + 20),
@@ -31,7 +30,7 @@ def get_contours(frame):
 
 def main():
     cap = cv2.VideoCapture('./VIRB0401.MP4')
-    #bboxes = []
+    # bboxes = []
     if not cap.isOpened():
         print('Cannot open camera')
     cap.set(3, 600)
@@ -41,7 +40,7 @@ def main():
         if not ret:
             break
         bbox_list, img_cnts = get_contours(frame)
-        #bboxes.append(bbox_list)
+        # bboxes.append(bbox_list)
         cv2.imshow("Result", img_cnts)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -49,7 +48,6 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
+
 if __name__ == "__main__":
     main()
-
-
