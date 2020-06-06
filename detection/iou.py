@@ -146,7 +146,7 @@ def calc_iou(true_positive_iou_threshold=0.5, verbose=False):
     mean_pd = mean(pd_ious)
     mean_tccl = mean(tccl_ious)
     if verbose:
-        print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}\npainting_detection precision {}; recall {}; F1: {}.\threshold_ccl precision {}; recall {}; F1: {}".format(mean_pd, mean_tccl,pd_prec,pd_rec,pd_F1,tccl_prec,tccl_rec,tccl_F1))
+        print("Mean painting_detection IoU: {} \nMean threshold_ccl IoU: {}\nPAINTING_DETECTION precision {}; recall {}; F1: {}.\nTHRESHOLD_CCL precision {}; recall {}; F1: {}".format(mean_pd, mean_tccl,pd_prec,pd_rec,pd_F1,tccl_prec,tccl_rec,tccl_F1))
     return mean(pd_ious), mean(tccl_ious)   
 
 

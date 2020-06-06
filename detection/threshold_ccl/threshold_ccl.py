@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 import json
 
+
+def calc_hist():
+
+    return
 # def run():
 #     bboxes = {}
 #
@@ -34,12 +38,42 @@ def run_frame(hsv_frame):
     for j in range(retval):
         top_left = (stats[j, cv2.CC_STAT_LEFT], stats[j, cv2.CC_STAT_TOP])
         bottom_right = (top_left[0] + stats[j, cv2.CC_STAT_WIDTH], top_left[1] + stats[j, cv2.CC_STAT_HEIGHT])
-        img_list.append({
-            "x":int(top_left[0]),
-            "y":     int(top_left[1]),
-            "width": int(bottom_right[0]-top_left[0]),
-            "height":int(bottom_right[1]-top_left[1])
-            })
-        img = cv2.rectangle(hsv_frame, top_left, bottom_right, (255, 0, 0), 2)
-    
+        width = int(bottom_right[0] - top_left[0])
+        height = int(bottom_right[1]-top_left[1])
+        area = width * height
+        if area > 32000:
+            img_list.append({
+                "x":    int(top_left[0]),
+                "y":     int(top_left[1]),
+                "width": width,
+                "height": height
+                })
+            img = cv2.rectangle(hsv_frame, top_left, bottom_right, (255, 0, 0), 2)
+        else:
+            img = hsv_frame
     return img_list, img
+
+
+def main():
+    cap = cv2.VideoCapture('./VIRB0401.MP4')
+    # bboxes = []
+    if not cap.isOpened():
+        print('Cannot open camera')
+    cap.set(3, 600)
+    cap.set(4, 480)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        _, img = run_frame(frame)
+        cv2.imshow("Result", img)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+
+if __name__ == "__main__":
+    main()
