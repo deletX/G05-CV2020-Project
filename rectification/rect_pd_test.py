@@ -19,13 +19,14 @@ def rect(frame, bboxes):
 
 
 if __name__ == "__main__":
+    bboxs = {}
     for img_i in range(1, 28):
         original = cv2.imread("../detection/canny_hough/input/{0:0=2d}.jpg".format(img_i),
                               cv2.IMREAD_UNCHANGED)
         np.swapaxes(original, 0, 1)
         bbox_list, bbox_img = get_contours(original)
-        cv2.imshow("or", cv2.resize(original, (1920, 1080)))
-        cv2.waitKey()
+        # cv2.imshow("or", cv2.resize(original, (1920, 1080)))
+        # cv2.waitKey()
         out = original.copy()
         for bbox in bbox_list:
             copy = original.copy()
@@ -42,6 +43,12 @@ if __name__ == "__main__":
             warp = cv2.warpPerspective(copy, transform_matrix, dsize=(copy.shape[1], copy.shape[0]))
             cropped = crop(warp, bbox)
             out[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']] = cropped
-
-        cv2.imshow("or", cv2.resize(out, (1920, 1080)))
-        cv2.waitKey()
+            bbox.pop('approx', None)
+        # cv2.imshow("or", cv2.resize(out, (1920, 1080)))
+        # cv2.waitKey()
+        cv2.imwrite("./output/{0:0=2d}.jpg".format(img_i), out)
+        bboxs["{0:0=2d}.jpg".format(img_i)] = bbox_list
+    with open("rect_bboxs.json", "w") as out:
+        print(bboxs)
+        json_obj = json.dumps(bboxs)
+        out.write(json_obj)
