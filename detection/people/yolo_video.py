@@ -95,6 +95,8 @@ while True:
 			scores = detection[5:]
 			classID = np.argmax(scores)
 			confidence = scores[classID]
+			if (classID != 0):
+				continue
 			# filter out weak predictions by ensuring the detected
 			# probability is greater than the minimum probability
 			if confidence > args["confidence"]:
@@ -124,6 +126,10 @@ while True:
 		# loop over the indexes we are keeping
 		for i in idxs.flatten():
 			# extract the bounding box coordinates
+			#if (classIDs[i] != 0):
+			#	print(LABELS[classIDs[i]])
+			#	continue
+
 			(x, y) = (boxes[i][0], boxes[i][1])
 			(w, h) = (boxes[i][2], boxes[i][3])
 			# draw a bounding box rectangle and label on the frame
