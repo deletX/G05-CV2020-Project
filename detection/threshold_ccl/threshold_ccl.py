@@ -3,9 +3,7 @@ import numpy as np
 import json
 
 
-def calc_hist():
 
-    return
 # def run():
 #     bboxes = {}
 #
