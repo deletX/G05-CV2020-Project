@@ -14,12 +14,12 @@ def get_contours(frame):
     for cnt in contours:
         area = cv2.contourArea(cnt)
         area_min = 6000
-        if area > area_min:
-            peri = cv2.arcLength(cnt, True)
-            approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
+        peri = cv2.arcLength(cnt, True)
+        approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
+        x, y, w, h = cv2.boundingRect(approx)
+        if area > area_min and area > 0.5*(w*h):
             print(len(approx))
             if len(approx) == 4:
-                x, y, w, h = cv2.boundingRect(approx)
                 bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
                 bbox_list.append(bbox)
                 cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (0, 255, 0), 5)
