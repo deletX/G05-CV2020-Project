@@ -40,7 +40,7 @@ def __iou__(gt_bbox, ev_bbox):
 
     ev_top_left = (ev_bbox["x"], ev_bbox["y"])
     ev_bot_right = (ev_bbox["x"] + ev_bbox["width"], ev_bbox["y"] + ev_bbox["height"])
-    ev_area = gt_bbox["width"] * gt_bbox["height"]
+    ev_area = ev_bbox["width"] * ev_bbox["height"]
 
     inter_rect_top_left = (max(gt_top_left[0], ev_top_left[0]), max(gt_top_left[1], ev_top_left[1]))
     inter_rect_bot_right = (min(gt_bot_right[0], ev_bot_right[0]), min(gt_bot_right[1], ev_bot_right[1]))
@@ -87,7 +87,7 @@ def calc_iou(true_positive_iou_threshold=0.5, verbose=False):
 
     if verbose:
         print("Starting")
-    for i in range(1, 21):
+    for i in range(1, 28):
         if verbose: print("{0:0=2d}.jpg".format(i))
         gt_pd_bbox = gt_pd["{0:0=2d}.jpg".format(i)]
         gt_ttcl_bbox = gt_tccl["{0:0=2d}.jpg".format(i)]
