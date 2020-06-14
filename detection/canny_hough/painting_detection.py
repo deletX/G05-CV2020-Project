@@ -18,7 +18,10 @@ def get_contours(frame):
         peri = cv2.arcLength(cnt, True)
         approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
         x, y, w, h = cv2.boundingRect(approx)
-        if area > 30000 and area > 0.5 * (w * h) and len(approx) == 4:
+        if ((img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * .99) > w * h and \
+                area > 30000 and \
+                area > 0.5 * (w * h) and \
+                len(approx) == 4:
             bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
             bbox_list.append(bbox)
             cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (255, 0, 0), 10)
