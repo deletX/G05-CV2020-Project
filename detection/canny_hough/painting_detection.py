@@ -4,27 +4,26 @@ import numpy as np
 
 def get_contours(frame):
     img_cnts = frame.copy()
-    img_blur = cv2.GaussianBlur(frame, (7, 7), 1)
-    img_gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
-    img_canny = cv2.Canny(img_gray, 23, 20)
+    lower = np.array([0, 0, 0])
+    upper = np.array([140, 130, 220])
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, lower, upper)
+    mask = 255 - mask
     kernel = np.ones((5, 5))
-    img_dil = cv2.dilate(img_canny, kernel, iterations=1)
+    img_dil = cv2.dilate(mask, kernel, iterations=2)
     contours, hierarchy = cv2.findContours(img_dil, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     bbox_list = []
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        area_min = 6000
         peri = cv2.arcLength(cnt, True)
         approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
         x, y, w, h = cv2.boundingRect(approx)
-        if area > area_min and area > 0.5*(w*h):
-            print(len(approx))
-            if len(approx) == 4:
-                bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
-                bbox_list.append(bbox)
-                cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (0, 255, 0), 5)
-                cv2.putText(img_cnts, "Area: " + str(int(area)), (x + w + 20, y + 20),
-                            cv2.FONT_HERSHEY_COMPLEX, 0.7, (0, 255, 0), 2)
+        if area > 30000 and area > 0.5 * (w * h) and len(approx) == 4:
+            bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
+            bbox_list.append(bbox)
+            cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (255, 0, 0), 10)
+            cv2.putText(img_cnts, "Area: " + str(int(area)), (x + w + 20, y + 20),
+                        cv2.FONT_HERSHEY_COMPLEX, 0.7, (255, 0, 0), 2)
     return bbox_list, img_cnts
 
 
