@@ -1,5 +1,19 @@
 import cv2
 import numpy as np
+from preprocessing.avg_histogram.avg_histogram import hist_distance
+
+
+def calc_hist(frame):
+    bgr_planes = cv2.split(frame)
+    histSize = 256
+    histRange = (0, 256)  # the upper boundary is exclusive
+    hist_b = cv2.calcHist(bgr_planes, [0], None, [histSize], histRange)
+    hist_g = cv2.calcHist(bgr_planes, [1], None, [histSize], histRange)
+    hist_r = cv2.calcHist(bgr_planes, [2], None, [histSize], histRange)
+    cv2.normalize(hist_b, hist_b, 1, 0, norm_type=cv2.NORM_L2)
+    cv2.normalize(hist_g, hist_g, 1, 0, norm_type=cv2.NORM_L2)
+    cv2.normalize(hist_r, hist_r, 1, 0, norm_type=cv2.NORM_L2)
+    return hist_b, hist_g, hist_r
 
 
 def get_contours(frame):
@@ -18,15 +32,16 @@ def get_contours(frame):
         peri = cv2.arcLength(cnt, True)
         approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
         x, y, w, h = cv2.boundingRect(approx)
-        if ((img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * .99) > w * h and \
-                area > 30000 and \
-                area > 0.5 * (w * h) and \
-                len(approx) == 4:
+        hist_b, hist_g, hist_r = calc_hist(frame[y:y + h, x:x + w, :])
+        if ((img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * .99) > w * h > (
+                (img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * 0.005) and len(approx) == 4 and \
+                hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_CORREL) > 0.4:
             bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
             bbox_list.append(bbox)
             cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (255, 0, 0), 10)
             cv2.putText(img_cnts, "Area: " + str(int(area)), (x + w + 20, y + 20),
                         cv2.FONT_HERSHEY_COMPLEX, 0.7, (255, 0, 0), 2)
+
     return bbox_list, img_cnts
 
 
