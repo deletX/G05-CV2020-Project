@@ -6,9 +6,9 @@ from matplotlib import pyplot as plt
 
 
 def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV):
-    av_b = np.load("./hist_b.npy")
-    av_g = np.load("./hist_g.npy")
-    av_r = np.load("./hist_r.npy")
+    av_b = np.load("./hist_b.npy").astype(np.float32)
+    av_g = np.load("./hist_g.npy").astype(np.float32)
+    av_r = np.load("./hist_r.npy").astype(np.float32)
     dist_b = cv2.compareHist(av_b, hist_b, method=method)
     dist_g = cv2.compareHist(av_g, hist_g, method=method)
     dist_r = cv2.compareHist(av_r, hist_r, method=method)
@@ -16,9 +16,9 @@ def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV):
 
 
 if __name__ == "__main__":
-    img_b = [0 for i in range(0, 256)]
-    img_g = [0 for i in range(0, 256)]
-    img_r = [0 for i in range(0, 256)]
+    img_b = np.zeros((256, 1), dtype=np.float32)
+    img_g = np.zeros((256, 1), dtype=np.float32)
+    img_r = np.zeros((256, 1), dtype=np.float32)
     for i in range(0, 95):
         original = cv2.imread("../../project_material/paintings_db/{0:0=3d}.png".format(i),
                               cv2.IMREAD_UNCHANGED)
