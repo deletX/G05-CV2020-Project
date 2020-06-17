@@ -16,7 +16,31 @@ def crop(img, box):
 
 
 def rect(frame, bboxes):
-    pass
+    out = frame.copy()
+    for bbox in bboxes:
+        copy = frame.copy()
+        src_pts = []
+        dst_pts = [
+            [bbox['x'], bbox['y']],
+            [bbox['x'], bbox['y'] + bbox['height']],
+            [bbox['x'] + bbox['width'], bbox['y'] + bbox['height']],
+            [bbox['x'] + bbox['width'], bbox['y']],
+        ]
+
+        edges = np.squeeze(bbox['approx'])
+        for el in dst_pts:
+            sortd = sorted(edges, key=lambda v: sqrt((el[0] - v[0]) ** 2 + (el[1] - v[1]) ** 2))
+            src_pts.append(sortd[0])
+        dst_pts = np.array(dst_pts, dtype=np.int32)
+        src_pts = np.array(src_pts, dtype=np.int32)
+
+        transform_matrix, _ = cv2.findHomography(src_pts, dst_pts)
+        warp = cv2.warpPerspective(copy, transform_matrix, dsize=(copy.shape[1], copy.shape[0]))
+        cropped = crop(warp, bbox)
+
+        out[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']] = cropped
+        bbox.pop('approx', None)
+    return out, bboxes
 
 
 if __name__ == "__main__":
