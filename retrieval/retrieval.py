@@ -75,9 +75,12 @@ def orb_with_flann(train_image, query_image):
     flann = cv2.FlannBasedMatcher(index_params, search_params)
     train_kp, train_dscs = orb.detectAndCompute(train_image, None)
     image = query_image['image']
+    title = query_image['title']
+    author = query_image['author']
+    room = query_image['room']
     dscs = query_image['descriptors']
     query_dscs = convert_dscs(dscs)
-    if(query_dscs is not None and len(query_dscs) > 2 and train_dscs is not None and len(train_dscs) > 2):
+    if (query_dscs is not None and len(query_dscs) > 2 and train_dscs is not None and len(train_dscs) > 2):
         flann_matches = flann.knnMatch(query_dscs, train_dscs, k=2)
         matches_mask = [[0, 0] for i in range(len(flann_matches))]
         good = []
@@ -87,7 +90,7 @@ def orb_with_flann(train_image, query_image):
                 if m.distance < 0.8 * n.distance:
                     matches_mask[index] = [1, 0]
                     good.append(flann_matches[index])
-        return image, len(good)
+        return image, len(good), {"title": title, "author": author, "room": room}
 
 
 def find_best_match_index(match):
@@ -100,19 +103,35 @@ def find_best_match_index(match):
     if not res:
         index_best = -1
         return index_best
-    for index, (image, good_match_length) in enumerate(res):
+    for index, (image, good_match_length, det) in enumerate(res):
         if good_match_length >= best_length:
             best_length = good_match_length
             index_best = index
     return index_best
 
 
+def retrieval(frame, query_images, bbox_list):
+    bbox_images = []
+    for bbox in bbox_list:
+        bbox_images.append(frame[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']])
+    for bbox_image in bbox_images:
+        bbox = cv2.cvtColor(bbox_image, cv2.COLOR_RGB2GRAY)
+        matches = []
+        hist = None
+        for query_image in query_images:
+            matches.append(orb_with_flann(bbox, query_image))
+        best_match_index = find_best_match_index(matches)
+        if best_match_index >= 0:
+            bbox['painting'] = matches[best_match_index][2]
+    return bbox_list
+
+
 def main():
-    train_images, images_names = load_all_image_from_path\
-        ("C:/Users/marco/PycharmProjects/ProgettoCVxNik/rectification/output/*.jpg")
-    train_images = train_images[:20]
+    train_images, images_names = load_all_image_from_path \
+        ("../rectification/output/*.jpg")
+    train_images = train_images
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    bboxs = load_json_file_from_path("C:/Users/marco/PycharmProjects/ProgettoCVxNik/rectification/rect_bboxs.json")
+    bboxs = load_json_file_from_path("../rectification/rect_bboxs.json")
     bbox_images = []
     for index, image in enumerate(train_images):
         image_bboxs = bboxs[images_names[index]]
@@ -124,7 +143,7 @@ def main():
         hist = None
         for query_image in query_images:
             matches.append(orb_with_flann(bbox, query_image))
-            #hist = compare_hists(bbox_image, query_image)
+            # hist = compare_hists(bbox_image, query_image)
         best_match_index = find_best_match_index(matches)
         if best_match_index >= 0:
             retr_image = cv2.imread("./paintings_db/" + matches[best_match_index][0])
