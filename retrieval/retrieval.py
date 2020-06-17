@@ -115,11 +115,11 @@ def retrieval(frame, query_images, bbox_list):
     for bbox in bbox_list:
         bbox_images.append(frame[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']])
     for bbox_image in bbox_images:
-        bbox = cv2.cvtColor(bbox_image, cv2.COLOR_RGB2GRAY)
+        bbox_image_gray = cv2.cvtColor(bbox_image, cv2.COLOR_RGB2GRAY)
         matches = []
         hist = None
         for query_image in query_images:
-            matches.append(orb_with_flann(bbox, query_image))
+            matches.append(orb_with_flann(bbox_image_gray, query_image))
         best_match_index = find_best_match_index(matches)
         if best_match_index >= 0:
             bbox['painting'] = matches[best_match_index][2]
