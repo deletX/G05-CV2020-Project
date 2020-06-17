@@ -4,6 +4,8 @@ import argparse
 import time
 import cv2
 import os
+import sys
+import os
 
 from detection.canny_hough.painting_detection import get_contours
 from detection.people.yolo_func import yolo_func
@@ -45,6 +47,9 @@ if __name__ == "__main__":
     # define slow mode
     slow = "slow" in args
 
+    # define skip for testing purposes
+    skip = 3
+
     # YOLO setup
     if verbose: print("Loading Yolo")
     net, ln = yolo_setup()
@@ -57,14 +62,14 @@ if __name__ == "__main__":
     painting_bbox_color = [255, 0, 0]
     painting_bbox_width = 7
     painting_descr_color = [255, 255, 255]
-    painting_descr_size = .7
-    painting_descr_thick = 10
+    painting_descr_size = .4
+    painting_descr_thick = 1
 
     person_bbox_color = [0, 0, 255]
     person_bbox_width = 5
     person_descr_color = [255, 255, 255]
-    person_descr_size = .8
-    person_descr_thick = 10
+    person_descr_size = .4
+    person_descr_thick = 1
 
     # open input
     if verbose: print("Opening input video")
@@ -76,7 +81,7 @@ if __name__ == "__main__":
     # retrieve capture parameters
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    fps = int(cap.get(cv2.CAP_PROP_FPS)) / skip
     fourcc = int(cap.get(cv2.CAP_PROP_FOURCC))
     if verbose: print("Input details:\n - {}px\n - {}px\n - {}fps\n - {}".format(width, height, fps, fourcc))
 
@@ -84,17 +89,26 @@ if __name__ == "__main__":
 
     if "output" in args:
         if verbose: print("Creating output file {}".format(args["output"]))
-        out = cv2.VideoWriter(args["output"] + ".mp4", fourcc, fps, (width, height))
+        out = cv2.VideoWriter(args["output"] + ".avi", cv2.VideoWriter_fourcc('m', 'j', 'p', 'g'), fps,
+                              (width, height))
 
+    frame_cnt = 0
     # loop over the whole video
     while True:
-        if verbose: print("Reading a frame")
         ret, frame = cap.read()
         if not ret:
             break
 
-        # object detection
+        # for testing purposes skip 2 frames every 3
+        if frame_cnt % skip != 0:
+            if verbose: print("Skipping frame #{}".format(frame_cnt))
+            frame_cnt += 1
+            continue
+        else:
+            frame_cnt += 1
+        if verbose: print("Frame #{}".format(frame_cnt))
 
+        # object detection
         painting_bboxs, img_cnts = get_contours(frame)
         if verbose: print("Identifying objects: {} paintings".format(len(painting_bboxs)))
         if slow: show_and_wait(img_cnts)
@@ -113,8 +127,11 @@ if __name__ == "__main__":
         if verbose: print("Detecting people: {} people found".format(len(people_bboxs)))
 
         # localization
-        room = localization(painting_bboxs_with_retrieval)
-        if verbose: print("Room computed".format(room))
+        if len([bbox for bbox in painting_bboxs_with_retrieval if "painting" in bbox]) > 0:
+            room = localization(painting_bboxs_with_retrieval)
+        else:
+            room = -1
+        if verbose: print("Room computed {}".format(room))
 
         # Drawing painting_bboxs
         if verbose: print("Drawing")
@@ -124,15 +141,19 @@ if __name__ == "__main__":
             cv2.rectangle(rect_frame, (x, y), (x + w, y + h), painting_bbox_color, painting_bbox_width)
 
             # determine description
-            descr = "Title: {}\nAuthor: {}"
+
             if "painting" in bbox:
                 painting = bbox["painting"]
-                descr.format(painting["title"], painting["author"])
+                title = "Title: {}".format(painting["title"])
+                author = "Author: {}".format(painting["author"])
             else:
-                descr.format("?", "?")
+                title = "Title: ?"
+                author = "Author: ?"
 
             # draw description
-            cv2.putText(rect_frame, descr, (x + painting_descr_thick * 2, y + (painting_descr_thick * 2)),
+            cv2.putText(rect_frame, title, (x + 20, y + 20),
+                        cv2.FONT_HERSHEY_COMPLEX, painting_descr_size, painting_descr_color, painting_descr_thick)
+            cv2.putText(rect_frame, author, (x + 20, y + 40),
                         cv2.FONT_HERSHEY_COMPLEX, painting_descr_size, painting_descr_color, painting_descr_thick)
 
         # Drawing ppl_bboxs
@@ -145,7 +166,7 @@ if __name__ == "__main__":
             descr = "Room: {}".format(room)
 
             # draw description
-            cv2.putText(rect_frame, descr, (x + person_descr_thick * 2, y + (person_descr_thick * 2)),
+            cv2.putText(rect_frame, descr, (x + person_descr_thick * 5, y + (person_descr_thick * 5)),
                         cv2.FONT_HERSHEY_COMPLEX, person_descr_size, person_descr_color, person_descr_thick)
 
         # write resulting frame
@@ -153,3 +174,12 @@ if __name__ == "__main__":
             out.write(rect_frame)
         else:
             cv2.imshow("result", rect_frame)
+
+    # destroy and release
+    cv2.destroyAllWindows()
+    cap.release()
+    if "output" in args:
+        out.release()
+
+    # exit (non funziona ne questa, ne quit() ne sys.exit(), me os._exit(0) ne ctrl-z o ctrl-c. Boh
+    exit(0)
