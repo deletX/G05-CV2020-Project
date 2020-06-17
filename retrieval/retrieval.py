@@ -24,8 +24,8 @@ def load_json_file_from_path(path):
 def convert_kps(keypoints):
     kps = []
     for el in keypoints:
-        kp = cv2.KeyPoint(x=el['point'][0], y=el['point'][1], _size=el['size'], _angle=el['angle'],
-                          _response=el['response'], _octave=el['octave'], _class_id=el['class_id'])
+        kp = cv2.KeyPoint(x=el[0], y=el[1], _size=el[2], _angle=el[3],
+                          _response=el[4], _octave=el[5], _class_id=el[6])
         kps.append(kp)
     return kps
 
@@ -34,121 +34,54 @@ def convert_dscs(descriptors):
     return np.asarray(descriptors, dtype=np.uint8)
 
 
-def display_image(image, title="image"):
-    img = cv2.resize(image, (600, 600))
-    cv2.imshow(title, img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-def combine_image(image1, image2):
-    h1, w1, c1 = image1.shape[:3]
-    h2, w2, c2 = image2.shape[:3]
-    vis = np.zeros((max(h1, h2), w1 + w2, c1), np.uint8)
-    vis[:h1, :w1, :c1] = image1
-    vis[:h2, w1:w1 + w2, :c2] = image2
-    return vis
-
-
-def compare_hists(train_image, query_image):
-    q_image = cv2.imread('./paintings_db/' + query_image['image'])
-    q_blue = cv2.calcHist([q_image], [0], None, [256], [0, 256])
-    q_green = cv2.calcHist([q_image], [1], None, [256], [0, 256])
-    q_red = cv2.calcHist([q_image], [2], None, [256], [0, 256])
-    t_blue = cv2.calcHist([train_image], [0], None, [256], [0, 256])
-    t_green = cv2.calcHist([train_image], [1], None, [256], [0, 256])
-    t_red = cv2.calcHist([train_image], [2], None, [256], [0, 256])
-    blue = cv2.compareHist(q_blue, t_blue, cv2.HISTCMP_INTERSECT)
-    green = cv2.compareHist(q_green, t_green, cv2.HISTCMP_INTERSECT)
-    red = cv2.compareHist(q_red, t_red, cv2.HISTCMP_INTERSECT)
-    return (blue + green + red) / 3
-
-
-def orb_with_flann(train_image, query_image):
-    orb = cv2.ORB_create(nfeatures=2000)
-    flann_index_lsh = 6
-    index_params = dict(algorithm=flann_index_lsh,
-                        table_number=12,
-                        key_size=20,
-                        multi_probe_level=2)
-    search_params = dict(checks=100)
-    flann = cv2.FlannBasedMatcher(index_params, search_params)
-    train_kp, train_dscs = orb.detectAndCompute(train_image, None)
-    image = query_image['image']
-    title = query_image['title']
-    author = query_image['author']
-    room = query_image['room']
-    dscs = query_image['descriptors']
-    query_dscs = convert_dscs(dscs)
-    if (query_dscs is not None and len(query_dscs) > 2 and train_dscs is not None and len(train_dscs) > 2):
-        flann_matches = flann.knnMatch(query_dscs, train_dscs, k=2)
-        matches_mask = [[0, 0] for i in range(len(flann_matches))]
-        good = []
-        for index in range(len(flann_matches)):
-            if len(flann_matches[index]) == 2:
-                m, n = flann_matches[index]
-                if m.distance < 0.8 * n.distance:
-                    matches_mask[index] = [1, 0]
-                    good.append(flann_matches[index])
-        return image, len(good), {"title": title, "author": author, "room": room}
-
-
-def find_best_match_index(match):
-    index_best = 0
-    best_length = 0
-    res = []
-    for m in match:
-        if m is not None:
-            res.append(m)
-    if not res:
-        index_best = -1
-        return index_best
-    for index, (image, good_match_length, det) in enumerate(res):
-        if good_match_length >= best_length:
-            best_length = good_match_length
-            index_best = index
-    return index_best
-
-
-def retrieval(frame, query_images, bbox_list):
-    bbox_images = []
-    for bbox in bbox_list:
-        bbox_images.append(frame[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']])
-    for bbox_image in bbox_images:
-        bbox_image_gray = cv2.cvtColor(bbox_image, cv2.COLOR_RGB2GRAY)
-        matches = []
-        hist = None
-        for query_image in query_images:
-            matches.append(orb_with_flann(bbox_image_gray, query_image))
-        best_match_index = find_best_match_index(matches)
-        if best_match_index >= 0:
-            bbox['painting'] = matches[best_match_index][2]
-    return bbox_list
+def retrieval(train_image, database):
+    orb = cv2.ORB_create()
+    train_gray = cv2.cvtColor(train_image, cv2.COLOR_RGB2GRAY)
+    train_kps, train_dscs = orb.detectAndCompute(train_gray, mask=None)
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    smallest_detected_sum_of_distances = 100000000000.0
+    results = []
+    if train_dscs is not None:
+        for query in database:
+            query_image = cv2.imread('./paintings_db/' + query['image'])
+            query_kps = query['keypoints']
+            query_kps = convert_kps(query_kps)
+            query_dscs = query['descriptors']
+            query_dscs = convert_dscs(query_dscs)
+            matches = bf.match(train_dscs, query_dscs)
+            print(len(matches))
+            distance_sum = sum(match.distance for match in matches)
+            if distance_sum < smallest_detected_sum_of_distances:
+                smallest_detected_sum_of_distances = distance_sum
+                results.append((train_image, train_kps, query_image, query_kps, matches, distance_sum))
+    results = sorted(results, key=lambda x: x[5])
+    results = results[:10]
+    if len(results) == 0:
+        return None
+    return results
 
 
 def main():
-    train_images, images_names = load_all_image_from_path \
-        ("../rectification/output/*.jpg")
-    train_images = train_images
+    train_images, images_names = load_all_image_from_path\
+        ("C:/Users/marco/PycharmProjects/ProgettoCVxNik/msf_lillo/*.jpg")
+    train_images = train_images[:20]
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    bboxs = load_json_file_from_path("../rectification/rect_bboxs.json")
+    bboxs = load_json_file_from_path("C:/Users/marco/PycharmProjects/ProgettoCVxNik/rectification/rect_bboxs.json")
     bbox_images = []
     for index, image in enumerate(train_images):
         image_bboxs = bboxs[images_names[index]]
         for bbox in image_bboxs:
             bbox_images.append(image[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']])
-    for bbox_image in bbox_images:
-        bbox = cv2.cvtColor(bbox_image, cv2.COLOR_RGB2GRAY)
-        matches = []
-        hist = None
-        for query_image in query_images:
-            matches.append(orb_with_flann(bbox, query_image))
-            # hist = compare_hists(bbox_image, query_image)
-        best_match_index = find_best_match_index(matches)
-        if best_match_index >= 0:
-            retr_image = cv2.imread("./paintings_db/" + matches[best_match_index][0])
-            result_image = combine_image(bbox_image, retr_image)
-            display_image(result_image)
+    for i, bbox_image in enumerate(bbox_images):
+        result = retrieval(bbox_image, query_images)
+        if result:
+            for j, el in enumerate(result):
+                j = j + 1
+                img = cv2.drawMatches(el[0], el[1], el[2], el[3], el[4], None, flags=2)
+                image = cv2.resize(img, (300, 300))
+                cv2.imshow('Match: {} {}'.format(i, j), image)
+                cv2.waitKey()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

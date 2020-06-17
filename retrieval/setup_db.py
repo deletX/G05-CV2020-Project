@@ -115,10 +115,9 @@ def main():
         im['author'] = author
         im['room'] = room
         im['image'] = image
-        im['keypoints'] = [{'point': kp.pt, 'size': kp.size, 'angle': kp.angle, 'response': kp.response,
-                            'octave': kp.octave, 'class_id': kp.class_id} for kp in kps]
-        d = dscs.tolist()
-        im['descriptors'] = d
+        im['keypoints'] = [[kp.pt[0], kp.pt[1], kp.size, kp.angle, kp.response, kp.octave, kp.class_id] for kp in kps]
+        dscs = dscs.tolist()
+        im['descriptors'] = dscs
         ims.append(im)
         im = {}
     with open('./paintings_descriptors.json', 'w') as f:
