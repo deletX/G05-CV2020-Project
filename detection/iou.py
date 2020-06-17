@@ -14,7 +14,7 @@ def setup():
     t_ccl_bboxes = {}
     for i in range(1, 28):
         t_ccl_frame = cv2.imread("./threshold_ccl/input/{0:0=2d}.jpg".format(i), cv2.IMREAD_UNCHANGED)
-        p_d_frame = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(i),
+        p_d_frame = cv2.imread("./canny_hough/input/{0:0=2d}.jpg".format(i),
                                cv2.IMREAD_UNCHANGED)
 
         p_d_bbox_list, pd_img = p_d_bbox(p_d_frame)
