@@ -210,3 +210,4 @@ fabric.properties
 /detection/canny_hough/GOPR1924.MP4
 /detection/canny_hough/GOPR1923.MP4
 /detection/canny_hough/output/GOPR1924.MP4
+/detection/people/yolo-coco/yolov3.weights
