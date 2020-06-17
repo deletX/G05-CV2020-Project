@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-from detection.canny_hough.painting_detection import calc_hist
-from preprocessing.avg_histogram.avg_histogram import hist_distance
 
 
 def nothing(x):
@@ -18,7 +16,7 @@ def main():
     cv2.createTrackbar('VMax', 'image', 0, 255, nothing)
     cv2.setTrackbarPos('HMax', 'image', 140)
     cv2.setTrackbarPos('SMax', 'image', 130)
-    cv2.setTrackbarPos('VMax', 'image', 255)
+    cv2.setTrackbarPos('VMax', 'image', 230)
     capture = cv2.VideoCapture('./20180206_114408.mp4')
     while True:
         ret, frame = capture.read()
@@ -45,11 +43,7 @@ def main():
             peri = cv2.arcLength(cnt, True)
             approx = cv2.approxPolyDP(cnt, 0.05 * peri, True)
             x, y, w, h = cv2.boundingRect(approx)
-            hist_b, hist_g, hist_r = calc_hist(frame[y:y + h, x:x + w, :])
-            if ((img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * .99) > w * h > (
-                    (img_dil.shape[0] - 1) * (img_dil.shape[1] - 1) * 0.005) and \
-                    hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_INTERSECT) > 3 and \
-                    area > 5000 and area > 0.5 * (w * h) and len(approx) == 4:
+            if area > 30000 and area > 0.5*(w*h) and len(approx) == 4:
                 bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
                 bbox_list.append(bbox)
                 cv2.rectangle(img_cnts, (x, y), (x + w, y + h), (255, 0, 0), 10)
