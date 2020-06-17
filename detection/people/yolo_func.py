@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 
-def yolo_func(frame, net, ln, conf=.7, th=.3):
+def yolo_func(frame, net, ln, conf=.8, th=.3):
     (H, W) = frame.shape[:2]
 
     blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416),
