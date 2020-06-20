@@ -10,7 +10,7 @@ import os
 from detection.canny_hough.painting_detection import get_contours
 from detection.people.yolo_func import yolo_func
 from localization.localization import localization
-from rectification.rect_pd_test import rect
+from rectification.rectification import rect
 from retrieval.retrieval import retrieval, load_json_file_from_path
 
 
