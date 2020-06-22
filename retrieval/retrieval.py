@@ -43,11 +43,11 @@ def resize(q_image, t_image):
 def retrieval(train_image, database):
     sift = cv2.xfeatures2d.SIFT_create()
     bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
-    #index_params = dict(algorithm=0, trees=5)
-    #search_params = dict()
-    #flann = cv2.FlannBasedMatcher(index_params, search_params)
     results = []
     for query in database:
+        query_title = query['title']
+        query_author = query['author']
+        query_room = query['room']
         query_image = cv2.imread('./paintings_db/' + query['image'])
         query_kps = query['keypoints']
         query_kps = convert_kps(query_kps)
@@ -56,46 +56,39 @@ def retrieval(train_image, database):
         train_image = resize(query_image, train_image)
         train_gray = cv2.cvtColor(train_image, cv2.COLOR_RGB2GRAY)
         train_kps, train_dscs = sift.detectAndCompute(train_gray, mask=None)
-        if train_dscs is not None and len(train_dscs) >= 2 and len(query_dscs) >= 2:
+        if train_dscs is not None and len(train_dscs) >= 2:
             matches = bf.match(query_dscs, train_dscs)
-            #matches = flann.knnMatch(query_dscs, train_dscs, k=2)
             good_matches = []
-            #for m, n in matches:
-                #if m.distance < 0.8 * n.distance:
-                    #good_matches.append(m)
-            #good = []
             for match in matches:
                 query_idx = match.queryIdx
                 train_idx = match.trainIdx
                 query_pt = query_kps[query_idx].pt
                 train_pt = train_kps[train_idx].pt
-                if abs(query_pt[0] - train_pt[0]) < 40 and abs(query_pt[1] - train_pt[1]) < 40:
+                if abs(query_pt[0] - train_pt[0]) < 20 and abs(query_pt[1] - train_pt[1]) < 20:
                     good_matches.append(match)
-            if len(good_matches) > 10:
-                results.append((query_image, query_kps, train_image, train_kps, good_matches, len(good_matches)))
-    results = sorted(results, key=lambda x: x[5], reverse=True)
-    results = results[:10]
-    if len(results) == 0:
-        return None
-    return results
+            if len(good_matches) > 0:
+                results.append((query_title, query_author, query_room, query['image'], len(good_matches)))
+    if len(results) > 0:
+        results = sorted(results, key=lambda x: x[4], reverse=True)[:10]
+        return results
 
 
 def main():
-    bboxs = load_json_file_from_path("../rectification/rect_bboxs.json")
+    images = load_json_file_from_path("../rectification/rect_bboxs.json")
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    for key in bboxs:
-        image = bboxs[key]
-        for i, el1 in enumerate(image):
-            train_image = el1['rect']
+    for key in images:
+        crops = images[key]
+        for crop in crops:
+            train_image = crop['rect']
             train_image = np.asarray(train_image, dtype=np.uint8)
-            result = retrieval(train_image, query_images)
-            if result:
-                for j, el2 in enumerate(result):
-                    j = j + 1
-                    img = cv2.drawMatches(el2[0], el2[1], el2[2], el2[3], el2[4], None, flags=2)
-                    image = cv2.resize(img, (500, 500))
-                    cv2.imshow('Match: {} {}'.format(i, j), image)
-                    cv2.waitKey()
+            results = retrieval(train_image, query_images)
+            if results:
+                train_image = cv2.resize(train_image, (500, 500))
+                cv2.imshow('Image', train_image)
+                for i, res in enumerate(results):
+                    print('{}) Title: {}, Author: {}, Room: {}, Image: {}'.format(i + 1, res[0],
+                                                                                   res[1], res[2], res[3]))
+                cv2.waitKey()
             cv2.destroyAllWindows()
 
 
