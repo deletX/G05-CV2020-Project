@@ -120,13 +120,15 @@ if __name__ == "__main__":
 
         # retrieval
         for bbox in painting_bboxs:
-            result = retrieval(query_images, bbox["rect"])[0]
+            results = retrieval(bbox["rect"], query_images)
             bbox.pop("rect", None)
-            bbox["painting"] = {
-                "title": result[0],
-                "author": result[1],
-                "room": result[2]
-            }
+            if results is not None:
+                result = results[0]
+                bbox["painting"] = {
+                    "title": result[0],
+                    "author": result[1],
+                    "room": result[2]
+                }
         if verbose: print("Retrieved paintings from db")
 
         # people detection
