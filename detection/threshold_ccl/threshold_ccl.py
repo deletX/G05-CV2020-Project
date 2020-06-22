@@ -23,7 +23,7 @@ def run_frame(frame):
     # img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel, iterations=3)
     # img = cv2.morphologyEx(img, cv2.MORPH_DILATE, kernel, iterations=5)
     img = 255 - img
-    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
         area = cv2.contourArea(cnt)
         peri = cv2.arcLength(cnt, True)
@@ -44,7 +44,7 @@ def run_frame(frame):
 
 
 def main():
-    cap = cv2.VideoCapture('../../project_material/videos/000/VIRB0391.mp4')
+    cap = cv2.VideoCapture('../canny_hough/VIRB0401.mp4')
     # bboxes = []
     if not cap.isOpened():
         print('Cannot open camera')

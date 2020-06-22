@@ -31,98 +31,72 @@ def convert_kps(keypoints):
 
 
 def convert_dscs(descriptors):
-    return np.asarray(descriptors, dtype=np.uint8)
+    return np.asarray(descriptors, dtype=np.float32)
 
 
-def convert_image(image):
-    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    rgb_planes = cv2.split(rgb)
-    planes = []
-    for plane in rgb_planes:
-        dilated_img = cv2.dilate(plane, np.ones((7, 7), np.uint8))
-        bg_img = cv2.medianBlur(dilated_img, 21)
-        diff_img = 255 - cv2.absdiff(plane, bg_img)
-        norm_img = cv2.normalize(diff_img, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
-        planes.append(norm_img)
-    result = cv2.merge(planes)
-    return result
-
-
-def resize_images(q_image, t_image):
+def resize(q_image, t_image):
     qH, qW, _ = q_image.shape
-    tH, tW, _ = t_image.shape
-    if tH < qH:
-        rH = qH
-    else:
-        rH = tH
-    if tW < qW:
-        rW = qW
-    else:
-        rW = tW
-    query_image = cv2.resize(q_image, (rH, rW))
-    train_image = cv2.resize(t_image, (rH, rW))
-    return query_image, train_image
+    train_image = cv2.resize(t_image, (qW, qH))
+    return train_image
 
 
 def retrieval(train_image, database):
-    orb = cv2.ORB_create()
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-    #train_image = cv2.GaussianBlur(train_image, (7, 7), 0)
-    #train_image = convert_image(train_image)
+    sift = cv2.xfeatures2d.SIFT_create()
+    bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
+    #index_params = dict(algorithm=0, trees=5)
+    #search_params = dict()
+    #flann = cv2.FlannBasedMatcher(index_params, search_params)
     results = []
     for query in database:
         query_image = cv2.imread('./paintings_db/' + query['image'])
-        #query_image = convert_image(query_image)
         query_kps = query['keypoints']
         query_kps = convert_kps(query_kps)
         query_dscs = query['descriptors']
         query_dscs = convert_dscs(query_dscs)
-        query_image, train_image = resize_images(query_image, train_image)
-        train_gray = cv2.cvtColor(train_image, cv2.COLOR_BGR2GRAY)
-        train_kps, train_dscs = orb.detectAndCompute(train_gray, None)
-        if train_dscs is not None:
+        train_image = resize(query_image, train_image)
+        train_gray = cv2.cvtColor(train_image, cv2.COLOR_RGB2GRAY)
+        train_kps, train_dscs = sift.detectAndCompute(train_gray, mask=None)
+        if train_dscs is not None and len(train_dscs) >= 2 and len(query_dscs) >= 2:
             matches = bf.match(query_dscs, train_dscs)
-            matches = sorted(matches, key=lambda x: x.distance)
+            #matches = flann.knnMatch(query_dscs, train_dscs, k=2)
             good_matches = []
+            #for m, n in matches:
+                #if m.distance < 0.8 * n.distance:
+                    #good_matches.append(m)
+            #good = []
             for match in matches:
                 query_idx = match.queryIdx
                 train_idx = match.trainIdx
                 query_pt = query_kps[query_idx].pt
                 train_pt = train_kps[train_idx].pt
-                if abs(query_pt[0] - train_pt[0]) < 70 and abs(query_pt[1] - train_pt[1]) < 70:
+                if abs(query_pt[0] - train_pt[0]) < 40 and abs(query_pt[1] - train_pt[1]) < 40:
                     good_matches.append(match)
-            if good_matches:
-                avg_distance = sum(match.distance for match in matches) / len(matches)
-            else:
-                avg_distance = 1000
-            if len(matches) > 50 and len(good_matches) / len(matches) > 0.2:
-                results.append((query_image, query_kps, train_image, train_kps, good_matches, avg_distance))
-            good_matches = []
-    if results:
-        results = sorted(results, key=lambda x: x[5])[:10]
-        return results
+            if len(good_matches) > 10:
+                results.append((query_image, query_kps, train_image, train_kps, good_matches, len(good_matches)))
+    results = sorted(results, key=lambda x: x[5], reverse=True)
+    results = results[:10]
+    if len(results) == 0:
+        return None
+    return results
 
 
 def main():
-    train_images, images_names = load_all_image_from_path \
-        ("C:/Users/marco/PycharmProjects/ProgettoCVxNik/msf_lillo/*.jpg")
+    bboxs = load_json_file_from_path("../rectification/rect_bboxs.json")
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    bboxs = load_json_file_from_path("C:/Users/marco/PycharmProjects/ProgettoCVxNik/rectification/rect_bboxs.json")
-    bbox_images = []
-    for index, image in enumerate(train_images):
-        image_bboxs = bboxs[images_names[index]]
-        for bbox in image_bboxs:
-            bbox_images.append(image[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']])
-    for i, bbox_image in enumerate(bbox_images):
-        result = retrieval(bbox_image, query_images)
-        if result:
-            for j, el in enumerate(result):
-                j = j + 1
-                img = cv2.drawMatches(el[0], el[1], el[2], el[3], el[4], None, flags=2)
-                image = cv2.resize(img, (500, 500))
-                cv2.imshow('Match: {} {}'.format(i, j), image)
-                cv2.waitKey()
-        cv2.destroyAllWindows()
+    for key in bboxs:
+        image = bboxs[key]
+        for i, el1 in enumerate(image):
+            train_image = el1['rect']
+            train_image = np.asarray(train_image, dtype=np.uint8)
+            result = retrieval(train_image, query_images)
+            if result:
+                for j, el2 in enumerate(result):
+                    j = j + 1
+                    img = cv2.drawMatches(el2[0], el2[1], el2[2], el2[3], el2[4], None, flags=2)
+                    image = cv2.resize(img, (500, 500))
+                    cv2.imshow('Match: {} {}'.format(i, j), image)
+                    cv2.waitKey()
+            cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

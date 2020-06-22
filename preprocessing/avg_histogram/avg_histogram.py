@@ -20,7 +20,7 @@ if __name__ == "__main__":
     img_g = np.zeros((256, 1), dtype=np.float32)
     img_r = np.zeros((256, 1), dtype=np.float32)
     for i in range(0, 95):
-        original = cv2.imread("../../project_material/paintings_db/{0:0=3d}.png".format(i),
+        original = cv2.imread("../../retrieval/paintings_db/{0:0=3d}.png".format(i),
                               cv2.IMREAD_UNCHANGED)
         bgr_planes = cv2.split(original)
 

@@ -3,7 +3,7 @@ from detection.canny_hough.painting_detection import get_contours
 
 
 def main():
-    capture = cv2.VideoCapture('./20180206_113600.mp4')
+    capture = cv2.VideoCapture('./VIRB0401.mp4')
     while True:
         ret, frame = capture.read()
         if frame is None:

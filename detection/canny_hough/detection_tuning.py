@@ -19,7 +19,7 @@ def main():
     cv2.setTrackbarPos('HMax', 'image', 140)
     cv2.setTrackbarPos('SMax', 'image', 130)
     cv2.setTrackbarPos('VMax', 'image', 255)
-    capture = cv2.VideoCapture('./20180206_114408.mp4')
+    capture = cv2.VideoCapture('./VIRB0401.mp4')
     while True:
         ret, frame = capture.read()
         if frame is None:
@@ -38,7 +38,7 @@ def main():
         mask = 255 - mask
         kernel = np.ones((5, 5))
         img_dil = cv2.dilate(mask, kernel, iterations=2)
-        contours, hierarchy = cv2.findContours(img_dil, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        _, contours, hierarchy = cv2.findContours(img_dil, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         bbox_list = []
         for cnt in contours:
             area = cv2.contourArea(cnt)

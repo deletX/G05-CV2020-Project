@@ -39,7 +39,7 @@ def get_contours(frame):
     for mask in masks:
         kernel = np.ones((5, 5))
         img_dil = cv2.dilate(mask, kernel, iterations=2)
-        contours, hierarchy = cv2.findContours(img_dil, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        _, contours, hierarchy = cv2.findContours(img_dil, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         bbox_list = []
         for cnt in contours:
             area = cv2.contourArea(cnt)

@@ -63,7 +63,7 @@ def run_frame(frame):
             close2 = cv2.morphologyEx(crop, cv2.MORPH_CLOSE, (7, 7), iterations=2)
             median = cv2.medianBlur(close2, 5)
             img = np.uint8(median)
-            contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            _, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             for contour in contours:
                 cv2.fillPoly(median, contour, color=(255, 255, 255))
 

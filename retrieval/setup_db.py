@@ -102,7 +102,7 @@ paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1
 def main():
     ims = []
     im = {}
-    orb = cv2.ORB_create()
+    sift = cv2.xfeatures2d.SIFT_create()
     for painting in paintings:
         paint = painting.split(',')
         title = paint[0]
@@ -110,7 +110,7 @@ def main():
         room = paint[2]
         image = paint[3]
         img = cv2.imread('./paintings_db/' + image, 0)
-        kps, dscs = orb.detectAndCompute(img, None)
+        kps, dscs = sift.detectAndCompute(img, None)
         im['title'] = title
         im['author'] = author
         im['room'] = room
