@@ -3,6 +3,9 @@ import numpy as np
 import glob
 import json
 
+from detection.threshold_ccl.threshold_ccl import run_frame
+from rectification.rectification import rect
+
 
 def load_all_image_from_path(path):
     image_list = []
@@ -74,12 +77,15 @@ def retrieval(train_image, database):
 
 
 def main():
-    images = load_json_file_from_path("../rectification/rect_bboxs.json")
+    # images = load_json_file_from_path("../rectification/rect_bboxs.json")
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    for key in images:
-        crops = images[key]
-        for crop in crops:
-            train_image = crop['rect']
+    for i in range(1, 28):
+        original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(i),
+                              cv2.IMREAD_UNCHANGED)
+        bbox_list, img = run_frame(original)
+        rected, bbox_rect = rect(original, bbox_list)
+        for bbox in bbox_rect:
+            train_image = bbox['rect']
             train_image = np.asarray(train_image, dtype=np.uint8)
             results = retrieval(train_image, query_images)
             if results:
@@ -87,7 +93,7 @@ def main():
                 cv2.imshow('Image', train_image)
                 for i, res in enumerate(results):
                     print('{}) Title: {}, Author: {}, Room: {}, Image: {}'.format(i + 1, res[0],
-                                                                                   res[1], res[2], res[3]))
+                                                                                  res[1], res[2], res[3]))
                 cv2.waitKey()
             cv2.destroyAllWindows()
 

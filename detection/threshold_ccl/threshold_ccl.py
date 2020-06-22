@@ -44,7 +44,7 @@ def run_frame(frame):
 
 
 def main():
-    cap = cv2.VideoCapture('../canny_hough/VIRB0401.mp4')
+    cap = cv2.VideoCapture('./VIRB0401.mp4')
     # bboxes = []
     if not cap.isOpened():
         print('Cannot open camera')
