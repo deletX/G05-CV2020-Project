@@ -30,26 +30,76 @@ def setup():
     return p_d_bboxes, t_ccl_bboxes
 
 
-def __iou__(gt_bbox, ev_bbox):
+# def __iou__(gt_bbox, ev_bbox):
+#     """
+#     Date una bbox ground truth ed una bbox da valutare calcola le aree, l'area di intersezione ed unione e ne ritorna il rapporto.
+#     """
+#     gt_top_left = (gt_bbox["x"], gt_bbox["y"])
+#     gt_bot_right = (gt_bbox["x"] + gt_bbox["width"], gt_bbox["y"] + gt_bbox["height"])
+#     gt_area = gt_bbox["width"] * gt_bbox["height"]
+#
+#     ev_top_left = (ev_bbox["x"], ev_bbox["y"])
+#     ev_bot_right = (ev_bbox["x"] + ev_bbox["width"], ev_bbox["y"] + ev_bbox["height"])
+#     ev_area = ev_bbox["width"] * ev_bbox["height"]
+#
+#     inter_rect_top_left = (max(gt_top_left[0], ev_top_left[0]), max(gt_top_left[1], ev_top_left[1]))
+#     inter_rect_bot_right = (min(gt_bot_right[0], ev_bot_right[0]), min(gt_bot_right[1], ev_bot_right[1]))
+#
+#     intersection = abs(inter_rect_bot_right[0] - inter_rect_top_left[0]) * abs(
+#         inter_rect_bot_right[1] - inter_rect_top_left[1])
+#     union = gt_area + ev_area - intersection
+#
+#     return intersection / union
+
+def __iou__(bb1, bb2):
     """
-    Date una bbox ground truth ed una bbox da valutare calcola le aree, l'area di intersezione ed unione e ne ritorna il rapporto.
+    Calculate the Intersection over Union (IoU) of two bounding boxes.
+
+    Parameters
+    ----------
+    bb1 : dict
+        Keys: {'x1', 'x2', 'y1', 'y2'}
+        The (x1, y1) position is at the top left corner,
+        the (x2, y2) position is at the bottom right corner
+    bb2 : dict
+        Keys: {'x1', 'x2', 'y1', 'y2'}
+        The (x, y) position is at the top left corner,
+        the (x2, y2) position is at the bottom right corner
+
+    Returns
+    -------
+    float
+        in [0, 1]
     """
-    gt_top_left = (gt_bbox["x"], gt_bbox["y"])
-    gt_bot_right = (gt_bbox["x"] + gt_bbox["width"], gt_bbox["y"] + gt_bbox["height"])
-    gt_area = gt_bbox["width"] * gt_bbox["height"]
+    assert bb1['x'] < bb1['x'] + bb1['width']
+    assert bb1['y'] < bb1['y'] + bb1['height']
+    assert bb2['x'] < bb2['x'] + bb2['width']
+    assert bb2['y'] < bb2['y'] + bb2['height']
 
-    ev_top_left = (ev_bbox["x"], ev_bbox["y"])
-    ev_bot_right = (ev_bbox["x"] + ev_bbox["width"], ev_bbox["y"] + ev_bbox["height"])
-    ev_area = ev_bbox["width"] * ev_bbox["height"]
+    # determine the coordinates of the intersection rectangle
+    x_left = max(bb1['x'], bb2['x'])
+    y_top = max(bb1['y'], bb2['y'])
+    x_right = min(bb1['x'] + bb1['width'], bb2['x'] + bb2['width'])
+    y_bottom = min(bb1['y'] + bb1['height'], bb2['y'] + bb2['height'])
 
-    inter_rect_top_left = (max(gt_top_left[0], ev_top_left[0]), max(gt_top_left[1], ev_top_left[1]))
-    inter_rect_bot_right = (min(gt_bot_right[0], ev_bot_right[0]), min(gt_bot_right[1], ev_bot_right[1]))
+    if x_right < x_left or y_bottom < y_top:
+        return 0.0
 
-    intersection = abs(inter_rect_bot_right[0] - inter_rect_top_left[0]) * abs(
-        inter_rect_bot_right[1] - inter_rect_top_left[1])
-    union = gt_area + ev_area - intersection
+    # The intersection of two axis-aligned bounding boxes is always an
+    # axis-aligned bounding box
+    intersection_area = (x_right - x_left) * (y_bottom - y_top)
 
-    return intersection / union
+    # compute the area of both AABBs
+    bb1_area = (bb1['x'] + bb1['width'] - bb1['x']) * (bb1['y'] + bb1['height'] - bb1['y'])
+    bb2_area = (bb2['x'] + bb2['width'] - bb2['x']) * (bb2['y'] + bb2['height'] - bb2['y'])
+
+    # compute the intersection over union by taking the intersection
+    # area and dividing it by the sum of prediction + ground-truth
+    # areas - the interesection area
+    iou = intersection_area / float(bb1_area + bb2_area - intersection_area)
+    assert iou >= 0.0
+    assert iou <= 1.0
+    return iou
 
 
 def calc_iou(true_positive_iou_threshold=0.5, verbose=False):
