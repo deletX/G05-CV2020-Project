@@ -114,12 +114,19 @@ if __name__ == "__main__":
         if slow: show_and_wait(img_cnts)
 
         # rectification
-        rect_frame, _ = rect(frame, painting_bboxs)
+        rect_frame, painting_bboxs = rect(frame, painting_bboxs)
         if verbose: print("Rectified")
         if slow: show_and_wait(rect_frame)
 
         # retrieval
-        painting_bboxs_with_retrieval = retrieval(rect_frame, query_images, painting_bboxs)
+        for bbox in painting_bboxs:
+            result = retrieval(query_images, bbox["rect"])[0]
+            bbox.pop("rect", None)
+            bbox["painting"] = {
+                "title": result[0],
+                "author": result[1],
+                "room": result[2]
+            }
         if verbose: print("Retrieved paintings from db")
 
         # people detection
@@ -127,15 +134,15 @@ if __name__ == "__main__":
         if verbose: print("Detecting people: {} people found".format(len(people_bboxs)))
 
         # localization
-        if len([bbox for bbox in painting_bboxs_with_retrieval if "painting" in bbox]) > 0:
-            room = localization(painting_bboxs_with_retrieval)
+        if len([bbox for bbox in painting_bboxs if "painting" in bbox]) > 0:
+            room = localization(painting_bboxs)
         else:
             room = -1
         if verbose: print("Room computed {}".format(room))
 
         # Drawing painting_bboxs
         if verbose: print("Drawing")
-        for bbox in painting_bboxs_with_retrieval:
+        for bbox in painting_bboxs:
             # draw bbox
             (x, y, w, h) = (bbox["x"], bbox["y"], bbox["width"], bbox["height"])
             cv2.rectangle(rect_frame, (x, y), (x + w, y + h), painting_bbox_color, painting_bbox_width)
