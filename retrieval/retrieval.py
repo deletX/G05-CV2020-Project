@@ -51,7 +51,7 @@ def retrieval(train_image, database):
         query_title = query['title']
         query_author = query['author']
         query_room = query['room']
-        query_image = cv2.imread('./paintings_db/' + query['image'])
+        query_image = cv2.imread('./retrieval/paintings_db/' + query['image'])
         query_kps = query['keypoints']
         query_kps = convert_kps(query_kps)
         query_dscs = query['descriptors']

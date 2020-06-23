@@ -1,12 +1,8 @@
 # import the necessary packages
-import numpy as np
 import argparse
-import time
 import cv2
-import os
-import sys
-import os
 
+# import local packages
 from detection.canny_hough.painting_detection import get_contours
 from detection.people.yolo_func import yolo_func
 from localization.localization import localization
@@ -14,9 +10,18 @@ from rectification.rectification import rect
 from retrieval.retrieval import retrieval, load_json_file_from_path
 
 
-def yolo_setup():
-    weights_path = "./detection/people/yolo-coco/yolov3.weights"
-    config_path = "./detection/people/yolo-coco/yolov3.cfg"
+def yolo_setup(weights_path="./detection/people/yolo-coco/yolov3.weights",
+               config_path="./detection/people/yolo-coco/yolov3.cfg"):
+    """
+    Reads the weights and config files and prepares the network for the YOLO to run.
+
+    :param weights_path: The path for the weights file.
+    :param config_path: The path for the config file.
+    :type weights_path: str
+    :type config_path: str
+    :return: Network and layer names for yolo
+    :rtype: tuple
+    """
     net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
     ln = net.getLayerNames()
     ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
@@ -24,12 +29,22 @@ def yolo_setup():
 
 
 def show_and_wait(img):
+    """
+    Debug function. Show an image and waits for a key
+
+    :param img: Image to be shown
+    """
     cv2.imshow("img", img)
     cv2.waitKey()
 
 
-if __name__ == "__main__":
-    # construct the argument parse and parse the arguments
+def get_params():
+    """
+    Verify presence of required arguments and reads passed arguments into a dictionary
+
+    :return: Dictionary of arguments
+    :rtype: dict
+    """
     ap = argparse.ArgumentParser()
     ap.add_argument("-i", "--input", required=True,
                     help="path to input video")
@@ -37,18 +52,25 @@ if __name__ == "__main__":
                     help="path to the output name")
     ap.add_argument("-v", "--verbose", default=argparse.SUPPRESS, action='store_true',
                     help="verbose mode")
-    ap.add_argument("-s", "--slow", default=argparse.SUPPRESS, action='store_true',
+    ap.add_argument("-d", "--debug", default=argparse.SUPPRESS, action='store_true',
                     help="slow mode")
-    args = vars(ap.parse_args())
+    ap.add_argument("-s", "--skip", default=0, type=int,
+                    help="slow mode")
+    return vars(ap.parse_args())
 
-    # define verbose mode
+
+if __name__ == "__main__":
+    args = get_params()
+
+    # define if verbose mode
     verbose = "verbose" in args
 
-    # define slow mode
-    slow = "slow" in args
+    # define if debug mode
+    debug = "debug" in args
 
     # define skip for testing purposes
-    skip = 3
+    skip = args["skip"]
+    if verbose: print("Analyzing 1 frame each {}".format(skip)) if skip > 0 else print("Analyzing all frames")
 
     # YOLO setup
     if verbose: print("Loading Yolo")
@@ -86,7 +108,6 @@ if __name__ == "__main__":
     if verbose: print("Input details:\n - {}px\n - {}px\n - {}fps\n - {}".format(width, height, fps, fourcc))
 
     # open output if defined
-
     if "output" in args:
         if verbose: print("Creating output file {}".format(args["output"]))
         out = cv2.VideoWriter(args["output"] + ".avi", cv2.VideoWriter_fourcc('m', 'j', 'p', 'g'), fps,
@@ -111,17 +132,21 @@ if __name__ == "__main__":
         # object detection
         painting_bboxs, img_cnts = get_contours(frame)
         if verbose: print("Identifying objects: {} paintings".format(len(painting_bboxs)))
-        if slow: show_and_wait(img_cnts)
+        if debug: show_and_wait(img_cnts)
 
         # rectification
         rect_frame, painting_bboxs = rect(frame, painting_bboxs)
         if verbose: print("Rectified")
-        if slow: show_and_wait(rect_frame)
+        if debug: show_and_wait(rect_frame)
 
         # retrieval
         for bbox in painting_bboxs:
             results = retrieval(bbox["rect"], query_images)
+
+            # remove rectification from dictionary
             bbox.pop("rect", None)
+
+            # if there is a result add it to the dictionary
             if results is not None:
                 result = results[0]
                 bbox["painting"] = {
@@ -150,7 +175,6 @@ if __name__ == "__main__":
             cv2.rectangle(rect_frame, (x, y), (x + w, y + h), painting_bbox_color, painting_bbox_width)
 
             # determine description
-
             if "painting" in bbox:
                 painting = bbox["painting"]
                 title = "Title: {}".format(painting["title"])
@@ -172,7 +196,7 @@ if __name__ == "__main__":
             cv2.rectangle(rect_frame, (x, y), (x + w, y + h), person_bbox_color, person_bbox_width)
 
             # detetrmine description (in this case the identified room)
-            descr = "Room: {}".format(room)
+            descr = "Room: {}".format(room if room > 0 else "?")
 
             # draw description
             cv2.putText(rect_frame, descr, (x + person_descr_thick * 5, y + (person_descr_thick * 5)),
@@ -183,12 +207,11 @@ if __name__ == "__main__":
             out.write(rect_frame)
         else:
             cv2.imshow("result", rect_frame)
+            cv2.waitKey(10)
 
     # destroy and release
     cv2.destroyAllWindows()
     cap.release()
     if "output" in args:
         out.release()
-
-    # exit (non funziona ne questa, ne quit() ne sys.exit(), me os._exit(0) ne ctrl-z o ctrl-c. Boh
     exit(0)
