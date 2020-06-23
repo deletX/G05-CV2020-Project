@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
-from detection.canny_hough.painting_detection import calc_hist
-from preprocessing.avg_histogram.avg_histogram import hist_distance
+from preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
 
 
 def nothing(x):

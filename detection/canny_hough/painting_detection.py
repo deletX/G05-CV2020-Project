@@ -1,19 +1,6 @@
 import cv2
 import numpy as np
-from preprocessing.avg_histogram.avg_histogram import hist_distance
-
-
-def calc_hist(frame):
-    bgr_planes = cv2.split(frame)
-    histSize = 256
-    histRange = (0, 256)  # the upper boundary is exclusive
-    hist_b = cv2.calcHist(bgr_planes, [0], None, [histSize], histRange)
-    hist_g = cv2.calcHist(bgr_planes, [1], None, [histSize], histRange)
-    hist_r = cv2.calcHist(bgr_planes, [2], None, [histSize], histRange)
-    cv2.normalize(hist_b, hist_b, 1, 0, norm_type=cv2.NORM_L2)
-    cv2.normalize(hist_g, hist_g, 1, 0, norm_type=cv2.NORM_L2)
-    cv2.normalize(hist_r, hist_r, 1, 0, norm_type=cv2.NORM_L2)
-    return hist_b, hist_g, hist_r
+from preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
 
 
 def get_contours(frame):

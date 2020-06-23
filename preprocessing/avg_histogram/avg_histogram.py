@@ -5,28 +5,82 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV):
-    av_b = np.load("./hist_b.npy").astype(np.float32)
-    av_g = np.load("./hist_g.npy").astype(np.float32)
-    av_r = np.load("./hist_r.npy").astype(np.float32)
+def calc_hist(frame):
+    """
+    Given a frame compute the normalized blue, green and red histogram
+
+    :param frame: Frame on which to compute the histograms
+    :return: Normalized blue, green, red histograms
+    :rtype: tuple
+    """
+    bgr_planes = cv2.split(frame)
+    histSize = 256
+    histRange = (0, 256)
+    hist_b = cv2.calcHist(bgr_planes, [0], None, [histSize], histRange)
+    hist_g = cv2.calcHist(bgr_planes, [1], None, [histSize], histRange)
+    hist_r = cv2.calcHist(bgr_planes, [2], None, [histSize], histRange)
+    cv2.normalize(hist_b, hist_b, 1, 0, norm_type=cv2.NORM_L2)
+    cv2.normalize(hist_g, hist_g, 1, 0, norm_type=cv2.NORM_L2)
+    cv2.normalize(hist_r, hist_r, 1, 0, norm_type=cv2.NORM_L2)
+    return hist_b, hist_g, hist_r
+
+
+def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV, gt_b="./hist_b.npy", gt_g="./hist_g.npy",
+                  gt_r="./hist_r.npy"):
+    """
+    Computes the average distance using the given method (default Kullback–Leibler divergence)
+    of the three color histograms and the locally computed ones
+
+    :param hist_b: blue histogram
+    :param hist_g: green histogram
+    :param hist_r: red histogram
+    :param method: distance method
+    :param gt_b: path to the locally stored ground truth blue histogram
+    :param gt_g: path to the locally stored ground truth blue histogram
+    :param gt_r: path to the locally stored ground truth blue histogram
+
+    :return: average distance of the three histograms
+    :rtype: float
+    """
+    # load local histograms
+    av_b = np.load(gt_b).astype(np.float32)
+    av_g = np.load(gt_g).astype(np.float32)
+    av_r = np.load(gt_r).astype(np.float32)
+
+    # compute each distance
     dist_b = cv2.compareHist(av_b, hist_b, method=method)
     dist_g = cv2.compareHist(av_g, hist_g, method=method)
     dist_r = cv2.compareHist(av_r, hist_r, method=method)
+
+    # return the average
     return (dist_b + dist_g + dist_r) / 3
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Creates the ground truth histogram and saves them locally
+
+    :return:
+    """
+
+    # initialize histograms
     img_b = np.zeros((256, 1), dtype=np.float32)
     img_g = np.zeros((256, 1), dtype=np.float32)
     img_r = np.zeros((256, 1), dtype=np.float32)
+
+    # loop over each given painting picture in the databse
     for i in range(0, 95):
         original = cv2.imread("../../retrieval/paintings_db/{0:0=3d}.png".format(i),
                               cv2.IMREAD_UNCHANGED)
+
+        # split bgr_planes
         bgr_planes = cv2.split(original)
 
+        # define size and range of histograms
         histSize = 256
-        histRange = (0, 256)  # the upper boundary is exclusive
+        histRange = (0, 256)
 
+        # compute blue, green and red histogram
         hist_b = cv2.calcHist(bgr_planes, [0], None, [histSize], histRange)
         hist_g = cv2.calcHist(bgr_planes, [1], None, [histSize], histRange)
         hist_r = cv2.calcHist(bgr_planes, [2], None, [histSize], histRange)
@@ -34,31 +88,23 @@ if __name__ == "__main__":
         img_b += hist_b
         img_g += hist_g
         img_r += hist_r
-    # for i in range(1, histSize):
-    #     cv2.line(histImage, (bin_w * (i - 1), hist_h - int(round(hist_b[i - 1]))),
-    #              (bin_w * (i), hist_h - int(round(hist_b[i]))),
-    #              (255, 0, 0), thickness=2)
-    #     cv2.line(histImage, (bin_w * (i - 1), hist_h - int(round(hist_g[i - 1]))),
-    #              (bin_w * (i), hist_h - int(round(hist_g[i]))),
-    #              (0, 255, 0), thickness=2)
-    #     cv2.line(histImage, (bin_w * (i - 1), hist_h - int(round(hist_r[i - 1]))),
-    #              (bin_w * (i), hist_h - int(round(hist_r[i]))),
-    #              (0, 0, 255), thickness=2)
-    #
-    # cv2.imshow('Source image', original)
-    # cv2.imshow('calcHist Demo', histImage)
-    # cv2.waitKey()
-    hist_w = 512
-    hist_h = 400
-    bin_w = int(round(hist_w / 256))
-    histImage = np.zeros((hist_h, hist_w, 3), dtype=np.uint8)
+
+    # normalize all histograms
     cv2.normalize(img_b, img_b, 1, 0, norm_type=cv2.NORM_L2)
     cv2.normalize(img_g, img_g, 1, 0, norm_type=cv2.NORM_L2)
     cv2.normalize(img_r, img_r, 1, 0, norm_type=cv2.NORM_L2)
+
+    # plot histogram and show
     plt.subplot(221), plt.plot(img_b)
     plt.subplot(222), plt.plot(img_g)
     plt.subplot(223), plt.plot(img_r)
     plt.show()
+
+    # save histograms
     np.save("./hist_b", img_b)
     np.save("./hist_g", img_g)
     np.save("./hist_r", img_r)
+
+
+if __name__ == "__main__":
+    main()

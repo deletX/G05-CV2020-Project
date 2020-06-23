@@ -3,8 +3,8 @@ import glob
 import cv2
 import numpy as np
 import json
-from detection.canny_hough.painting_detection import calc_hist
-from preprocessing.avg_histogram.avg_histogram import hist_distance
+
+from preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
 
 
 def run_frame(frame):
@@ -25,7 +25,7 @@ def run_frame(frame):
     _, _, img = cv2.split(cv2.cvtColor(frame, cv2.COLOR_BGR2HSV))
 
     # apply a gaussian blur
-    img = cv2.GaussianBlur(v, (7, 7), 1)
+    img = cv2.GaussianBlur(img, (7, 7), 1)
 
     # apply a treshold using the OTSU method
     _, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
