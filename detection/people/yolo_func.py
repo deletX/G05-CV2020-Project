@@ -3,6 +3,17 @@ import cv2
 
 
 def yolo_func(frame, net, ln, conf=.8, th=.3):
+    """
+    Run the YOLO network onto the frame to detect people
+
+    :param frame: Frame on which to perform people detection
+    :param net: Preloaded network
+    :param ln: Layer names
+    :param conf: Confidence threshold
+    :param th: Non-maxmima suppression threshold value
+    :return: Detected bounding boxes
+    :rtype: dict
+    """
     (H, W) = frame.shape[:2]
 
     blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416),
