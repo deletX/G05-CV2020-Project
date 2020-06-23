@@ -56,6 +56,9 @@ def run_frame(frame):
         # we compute the histogram of color in the bounding box area
         hist_b, hist_g, hist_r = calc_hist(frame[y:y + h, x:x + w, :])
 
+        # define max_r
+        max_r = 3
+
         # we apply some filters to filter out:
         # - the too small and too large bounding boxes,
         # - the bounding boxes that have an histogram of colors too distant from the computed average
@@ -64,7 +67,8 @@ def run_frame(frame):
         if ((img.shape[0] - 1) * (img.shape[1] - 1) * .99) > w * h > (
                 (img.shape[0] - 1) * (img.shape[1] - 1) * 0.005) and \
                 hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_INTERSECT) > 3 and \
-                area > 5000 and area > 0.5 * (w * h) and len(approx) == 4:
+                area > 5000 and area > 0.5 * (w * h) and len(approx) == 4 and \
+                1 / max_r < w / h < max_r:
             bbox = {'x': x, 'y': y, 'height': h, 'width': w, 'approx': approx}
             img_list.append(bbox)
             cv2.rectangle(out, (x, y), (x + w, y + h), (255, 0, 0), 10)
