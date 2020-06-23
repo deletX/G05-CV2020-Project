@@ -1,7 +1,4 @@
-import json
-
 import cv2
-
 from detection.iou import __iou__
 from detection.threshold_ccl.threshold_ccl import run_frame
 from rectification.rectification import rect

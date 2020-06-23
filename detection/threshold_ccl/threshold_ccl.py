@@ -1,9 +1,7 @@
 import glob
-
 import cv2
 import numpy as np
 import json
-
 from preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
 
 
