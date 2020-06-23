@@ -1,14 +1,18 @@
 import cv2
 import numpy as np
-import json
-import random
-from detection.canny_hough.painting_detection import get_contours
 from math import sqrt
-
 from detection.threshold_ccl.threshold_ccl import run_frame
 
 
 def crop(img, box):
+    """
+    Given a bounding box and a frame returns the crop corresponding to the bounding box of the frame
+
+    :param img: frame
+    :param box: bounding box
+    :type box: dict
+    :return: Crop
+    """
     x_left = box['y']
     x_right = x_left + box['height']
     y_left = box['x']
@@ -18,10 +22,22 @@ def crop(img, box):
 
 
 def rect(frame, bboxes):
+    """
+    Computes the rectification for each given bounding box containing the polygonal approximation of the content.
+    The painting gets rectified by warping its vertices onto the bounding box ones
+
+    :param frame: frame
+    :param bboxes: Bounding boxes list
+    :type bboxes: list
+    :return: The image with the rectification printed on it and the list of bboxes on which
+            the rectified crop had been added
+    """
     out = frame.copy()
     for bbox in bboxes:
         copy = frame.copy()
         src_pts = []
+
+        # the destination points are the bounding box vertices
         dst_pts = [
             [bbox['x'], bbox['y']],
             [bbox['x'] + bbox['width'], bbox['y'] + bbox['height']],
@@ -31,24 +47,39 @@ def rect(frame, bboxes):
 
         edges = np.squeeze(bbox['approx'])
         for el in dst_pts:
+            # sort the painting vertices from the nearest to the furthest from the given bounding box vertice
             edges = sorted(edges, key=lambda v: sqrt((el[0] - v[0]) ** 2 + (el[1] - v[1]) ** 2))
             src_pts.append(edges[0])
+
+            # remove the point so it cannot be chosen again
             edges.pop(0)
         dst_pts = np.array(dst_pts, dtype=np.int32)
         src_pts = np.array(src_pts, dtype=np.int32)
 
+        # find the Homography transformation
         transform_matrix, _ = cv2.findHomography(src_pts, dst_pts)
+
+        # warp the copy with the found transformation matrix
         warp = cv2.warpPerspective(copy, transform_matrix, dsize=(copy.shape[1], copy.shape[0]))
+
+        # crop the result, so to keep just the rectified painting
         cropped = crop(warp, bbox)
 
+        # print the rectified painting
         out[bbox['y']:bbox['y'] + bbox['height'], bbox['x']:bbox['x'] + bbox['width']] = cropped
+
+        # remove the poly from the dictionary and add the rectified painting
         bbox.pop('approx', None)
         bbox["rect"] = cropped
     return out, bboxes
 
 
-if __name__ == "__main__":
-    bboxs = {}
+def main():
+    """
+    Main function used for testing purposes.
+
+    :return:
+    """
     for img_i in range(1, 28):
         original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(img_i),
                               cv2.IMREAD_UNCHANGED)
@@ -56,9 +87,7 @@ if __name__ == "__main__":
         bbox_list, bbox_img = run_frame(original)
         out, bbox_list = rect(original, bbox_list)
         cv2.imwrite("./output/{0:0=2d}.jpg".format(img_i), out)
-        bboxs["{0:0=2d}.jpg".format(img_i)] = bbox_list
 
-    with open("rect_bboxs.json", "w") as out:
-        print(bboxs)
-        json_obj = json.dumps(bboxs)
-        out.write(json_obj)
+
+if __name__ == "__main__":
+    main()
