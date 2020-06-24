@@ -51,7 +51,7 @@ def retrieval(train_image, database):
         query_title = query['title']
         query_author = query['author']
         query_room = query['room']
-        query_image = cv2.imread('./retrieval/paintings_db/' + query['image'])
+        query_image = cv2.imread('./paintings_db/' + query['image'])
         query_kps = query['keypoints']
         query_kps = convert_kps(query_kps)
         query_dscs = query['descriptors']
@@ -59,27 +59,27 @@ def retrieval(train_image, database):
         train_image = resize(query_image, train_image)
         train_gray = cv2.cvtColor(train_image, cv2.COLOR_RGB2GRAY)
         train_kps, train_dscs = sift.detectAndCompute(train_gray, mask=None)
-        if train_dscs is not None and len(train_dscs) >= 2:
+        if train_dscs is not None:
             matches = bf.match(query_dscs, train_dscs)
-            good_matches = []
-            for match in matches:
-                query_idx = match.queryIdx
-                train_idx = match.trainIdx
-                query_pt = query_kps[query_idx].pt
-                train_pt = train_kps[train_idx].pt
-                if abs(query_pt[0] - train_pt[0]) < 20 and abs(query_pt[1] - train_pt[1]) < 20:
-                    good_matches.append(match)
-            if len(good_matches) > 0:
-                results.append((query_title, query_author, query_room, query['image'], len(good_matches)))
+            #good_matches = []
+            #for match in matches:
+                #query_idx = match.queryIdx
+                #train_idx = match.trainIdx
+                #query_pt = query_kps[query_idx].pt
+                #train_pt = train_kps[train_idx].pt
+                #if abs(query_pt[0] - train_pt[0]) < 40 and abs(query_pt[1] - train_pt[1]) < 40:
+                    #good_matches.append(match)
+            avg_distance = sum(match.distance for match in matches) / len(matches)
+            results.append((query_title, query_author, query_room, query['image'], avg_distance))
     if len(results) > 0:
-        results = sorted(results, key=lambda x: x[4], reverse=True)[:10]
+        results = sorted(results, key=lambda x: x[4])[:10]
         return results
 
 
 def main():
     # images = load_json_file_from_path("../rectification/rect_bboxs.json")
     query_images = load_json_file_from_path("./paintings_descriptors.json")
-    for i in range(1, 28):
+    for i in range(1, 78):
         original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(i),
                               cv2.IMREAD_UNCHANGED)
         bbox_list, img = run_frame(original)
