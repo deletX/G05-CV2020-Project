@@ -22,31 +22,25 @@ def run_frame(frame):
 
     # convert the frame into HSV and split the channels, we keep just the value
     _, _, img = cv2.split(cv2.cvtColor(frame, cv2.COLOR_BGR2HSV))
-    cv2.imshow("original", img)
     # apply a gaussian blur
     img = cv2.GaussianBlur(img, (7, 7), 1)
-    cv2.imshow("gauss_blur", img)
 
     # apply a treshold using the OTSU method
     _, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    cv2.imshow("threshold", img)
 
     # Apply 1 dilation and 5 opening
     kernel = np.ones((3, 3))
     img = cv2.morphologyEx(img, cv2.MORPH_DILATE, kernel, iterations=1)
     img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel, iterations=5)
-    cv2.imshow("morph", img)
     # flip the detection (we were detecting the background).
     # It is technically useless, but for debugging purposes it is best to show "detected" paintings
     img = 255 - img
-    cv2.imshow("swap", img)
 
     # use Satoshi Suzuki et al. algorithm to find the paintings contours
     img, contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contour = img.copy()
     contour = cv2.cvtColor(contour, cv2.COLOR_GRAY2BGR)
     cv2.drawContours(contour, contours, -1, (0, 255, 0), 3)
-    cv2.imshow("contours", contour)
 
     # loop over all the detected contours
     for cnt in contours:

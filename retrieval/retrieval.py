@@ -61,14 +61,6 @@ def retrieval(train_image, database):
         train_kps, train_dscs = sift.detectAndCompute(train_gray, mask=None)
         if train_dscs is not None:
             matches = bf.match(query_dscs, train_dscs)
-            #good_matches = []
-            #for match in matches:
-                #query_idx = match.queryIdx
-                #train_idx = match.trainIdx
-                #query_pt = query_kps[query_idx].pt
-                #train_pt = train_kps[train_idx].pt
-                #if abs(query_pt[0] - train_pt[0]) < 40 and abs(query_pt[1] - train_pt[1]) < 40:
-                    #good_matches.append(match)
             avg_distance = sum(match.distance for match in matches) / len(matches)
             results.append((query_title, query_author, query_room, query['image'], avg_distance))
     if len(results) > 0:
@@ -77,7 +69,6 @@ def retrieval(train_image, database):
 
 
 def main():
-    # images = load_json_file_from_path("../rectification/rect_bboxs.json")
     query_images = load_json_file_from_path("./paintings_descriptors.json")
     for i in range(1, 78):
         original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(i),

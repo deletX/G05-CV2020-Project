@@ -54,7 +54,7 @@ def get_params():
                     help="verbose mode")
     ap.add_argument("-d", "--debug", default=argparse.SUPPRESS, action='store_true',
                     help="slow mode")
-    ap.add_argument("-s", "--skip", default=0, type=int,
+    ap.add_argument("-s", "--skip", default=1, type=int,
                     help="slow mode")
     return vars(ap.parse_args())
 
