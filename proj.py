@@ -110,7 +110,7 @@ if __name__ == "__main__":
     # open output if defined
     if "output" in args:
         if verbose: print("Creating output file {}".format(args["output"]))
-        out = cv2.VideoWriter(args["output"] + ".avi", cv2.VideoWriter_fourcc('m', 'j', 'p', 'g'), fps,
+        out = cv2.VideoWriter(args["output"] + ".mp4v", cv2.VideoWriter_fourcc('d', 'i', 'v', 'x'), fps,
                               (width, height))
 
     frame_cnt = 0
