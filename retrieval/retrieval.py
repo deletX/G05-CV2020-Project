@@ -45,13 +45,13 @@ def resize(q_image, t_image):
 
 def retrieval(train_image, database):
     sift = cv2.xfeatures2d.SIFT_create()
-    bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
+    bf = cv2.BFMatcher(crossCheck=True)
     results = []
     for query in database:
         query_title = query['title']
         query_author = query['author']
         query_room = query['room']
-        query_image = cv2.imread('./paintings_db/' + query['image'])
+        query_image = cv2.imread('./retrieval/paintings_db/' + query['image'])
         query_kps = query['keypoints']
         query_kps = convert_kps(query_kps)
         query_dscs = query['descriptors']
