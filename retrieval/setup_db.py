@@ -1,6 +1,7 @@
 import cv2
 import json
 
+# the painting list
 paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594),19,000.png',
              'Nerone davanti al corpo di Agrippina,Ferrari Luca detto Luca da Reggio (Reggio Emilia  1599 - Padova  1654),21,001.png',
              'Minerva,Venturini Gaspare (Ferrara  notizie dal 1576 al 1593),20,002.png',
@@ -99,30 +100,55 @@ paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1
              ]
 
 
-def main():
-    ims = []
-    im = {}
+def create_painting_db(output_file='./paintings_descriptors.json', verbose=False):
+    """
+    Compute the keypoints for each painting and create the databse.
+
+    :param output_file: Path of the output descriptors database. Default: './paintings_descriptors.json'
+    :param verbose: Enable verbose mode: Defaault: False
+    :type output_file: str
+    :type verbose: bool
+
+    :return: None
+    """
+    painting_descriptors = []
     sift = cv2.xfeatures2d.SIFT_create()
+
     for painting in paintings:
+        cur_descriptors = {}
         paint = painting.split(',')
         title = paint[0]
         author = paint[1]
         room = paint[2]
         image = paint[3]
+
+        if verbose: print("Working on image: {}".format(image))
+
+        # load the image from the database and compute SIFT keypoints and descriptors
         img = cv2.imread('./paintings_db/' + image, 0)
-        kps, dscs = sift.detectAndCompute(img, None)
-        im['title'] = title
-        im['author'] = author
-        im['room'] = room
-        im['image'] = image
-        im['keypoints'] = [[kp.pt[0], kp.pt[1], kp.size, kp.angle, kp.response, kp.octave, kp.class_id] for kp in kps]
-        dscs = dscs.tolist()
-        im['descriptors'] = dscs
-        ims.append(im)
-        im = {}
-    with open('./paintings_descriptors.json', 'w') as f:
-        json.dump(ims, f)
+
+        if verbose: print("     Computing descriptors")
+        _, descriptors = sift.detectAndCompute(img, None)
+
+        # add data to current painting dictionary
+        cur_descriptors['title'] = title
+        cur_descriptors['author'] = author
+        cur_descriptors['room'] = room
+        cur_descriptors['image'] = image
+        cur_descriptors['shape'] = img.shape
+
+        # convert descriptors to a list and add to the current painting dictionary
+        descriptors = descriptors.tolist()
+        cur_descriptors['descriptors'] = descriptors
+
+        # add the current painting dictionary to the overall list
+        painting_descriptors.append(cur_descriptors)
+
+    # store the list into a .json file
+    with open(output_file, 'w') as f:
+        if verbose: print("Saving result into \"{}\"".format(output_file))
+        json.dump(painting_descriptors, f)
 
 
 if __name__ == "__main__":
-    main()
+    create_painting_db(verbose=True)

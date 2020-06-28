@@ -1,13 +1,16 @@
 # import the necessary packages
 import argparse
+import os
+
 import cv2
 
 # import local packages
-from detection.canny_hough.painting_detection import get_contours
 from detection.people.yolo_func import yolo_func
+from detection.threshold_ccl.threshold_ccl import run_frame
 from localization.localization import localization
 from rectification.rectification import rect
 from retrieval.retrieval import retrieval, load_json_file_from_path
+from retrieval.setup_db import create_painting_db
 
 
 def yolo_setup(weights_path="./detection/people/yolo-coco/yolov3.weights",
@@ -78,6 +81,8 @@ if __name__ == "__main__":
 
     # retrieval setup, load db
     if verbose: print("Loading painting descriptors")
+    if not os.path.exists("./retrieval/paintings_descriptors.json"):
+        create_painting_db("./retrieval/paintings_descriptors.json")
     query_images = load_json_file_from_path("./retrieval/paintings_descriptors.json")
 
     # color definition
@@ -130,7 +135,7 @@ if __name__ == "__main__":
         if verbose: print("Frame #{}".format(frame_cnt))
 
         # object detection
-        painting_bboxs, img_cnts = get_contours(frame)
+        painting_bboxs, img_cnts = run_frame(frame)
         if verbose: print("Identifying objects: {} paintings".format(len(painting_bboxs)))
         if debug: show_and_wait(img_cnts)
 
