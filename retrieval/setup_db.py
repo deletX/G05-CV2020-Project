@@ -125,7 +125,7 @@ def create_painting_db(output_file='./paintings_descriptors.json', verbose=False
         if verbose: print("Working on image: {}".format(image))
 
         # load the image from the database and compute SIFT keypoints and descriptors
-        img = cv2.imread('./paintings_db/' + image, 0)
+        img = cv2.imread('./paintings_db/' + image, cv2.IMREAD_UNCHANGED)
 
         if verbose: print("     Computing descriptors")
         _, descriptors = sift.detectAndCompute(img, None)

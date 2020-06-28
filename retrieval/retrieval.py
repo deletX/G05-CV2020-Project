@@ -44,13 +44,13 @@ def retrieval(detected_image, database):
         db_image_shape = db_image['shape']
 
         # resize the given image as the db_image
-        detected_image = cv2.resize(detected_image, (db_image_shape[0], db_image_shape[1]))
+        # detected_image = cv2.resize(detected_image, (db_image_shape[0], db_image_shape[1]))
 
         # convert the given image to gray
-        detected_gray = cv2.cvtColor(detected_image, cv2.COLOR_RGB2GRAY)
+        # detected_gray = cv2.cvtColor(detected_image, cv2.COLOR_RGB2GRAY)
 
         # compute SIFT descriptors for the given image0
-        _, detected_descriptors = sift.detectAndCompute(detected_gray, mask=None)
+        _, detected_descriptors = sift.detectAndCompute(detected_image, mask=None)
 
         if detected_descriptors is not None:
             # if there are descriptors compute the brute force match onto the current database image,
