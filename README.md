@@ -9,27 +9,11 @@ Options:
  - `-s` or `--skip` followed by a number defines the number to frame to skip, for example if value is 3 it will analyze 1 frame each 3.
  - `-d` or `--debug` will enable debug-mode
 
-## Painting Detection
-...
+## Setup
+Require python modules are found in `requirements.txt` and therefore can be installed with `pip install -r requirements.txt` 
 
+The only file that we were not able to re-create or retrieve during runtime are YOLO network weights,
+that must be downloaded [here](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) and put into `detection/people/yolo-coco/`.
 
-
-## Painting Rectification
-...
-
-
-
-## Painting Retrieval
-...
-
-
-
-## People Detection
-...
-
-
-
-## People Localization
-...
-
-
+## Paper
+Detail of the pipline can be found inside the [paper document](./Gambelli_Gavioli_Glorio_g05_project_paper.pdf)

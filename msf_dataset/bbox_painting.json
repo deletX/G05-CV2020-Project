@@ -1,0 +1,1603 @@
+{
+  "01.jpg": [
+    {
+      "x": 696,
+      "y": 0,
+      "width": 985,
+      "height": 1440,
+      "painting": "Redentore benedicente,Bastiani Lazzaro (?) (Venezia  1449 ca. - 1512)",
+      "img": "023.png"
+    },
+    {
+      "x": 1993,
+      "y": 49,
+      "width": 539,
+      "height": 1373,
+      "painting": "Madonna col Bambino santi e donatori,Catena Vincenzo (attr.) (Venezia  1480 ca. - 1531)",
+      "img": "029.png"
+    }
+  ],
+  "02.jpg": [
+    {
+      "x": 823,
+      "y": 526,
+      "width": 132,
+      "height": 183,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "width": 484,
+      "height": 942,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1393,
+      "y": 115,
+      "width": 223,
+      "height": 947,
+      "painting": "Sant'Antonio da Padova Tura Cosme' (Ferrara 1430 ca. - 1495)",
+      "img": "017.png"
+    }
+  ],
+  "03.jpg": [
+    {
+      "x": 221,
+      "y": 23,
+      "width": 623,
+      "height": 1037,
+      "painting": "Gesu crocifisso Reni Guido (Bologna 1575 - 1642)",
+      "img": "046.png"
+    },
+    {
+      "x": 917,
+      "y": 75,
+      "width": 331,
+      "height": 877,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1259,
+      "y": 365,
+      "width": 191,
+      "height": 525,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1453,
+      "y": 561,
+      "width": 101,
+      "height": 299,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1649,
+      "y": 535,
+      "width": 137,
+      "height": 109,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1653,
+      "y": 679,
+      "width": 141,
+      "height": 109,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "04.jpg": [
+    {
+      "x": 0,
+      "y": 71,
+      "width": 608,
+      "height": 705,
+      "painting": "Apparizione dei tre angeli ad Abramo Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)",
+      "img": "072.png"
+    },
+    {
+      "x": 673,
+      "y": 91,
+      "width": 819,
+      "height": 727,
+      "painting": "Ultima cena Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)",
+      "img": "089.png"
+    },
+    {
+      "x": 1383,
+      "y": 289,
+      "width": 527,
+      "height": 567,
+      "painting": "Apparizione dell'angelo a Elia Donducci Giovanni Andrea detto Mastelletta (Bologna  1575 - 1655)",
+      "img": "064.png"
+    }
+  ],
+  "05.jpg": [
+    {
+      "x": 169,
+      "y": 383,
+      "width": 749,
+      "height": 697,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1253,
+      "y": 521,
+      "width": 251,
+      "height": 377,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1241,
+      "y": 0,
+      "width": 243,
+      "height": 370,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 107,
+      "y": 0,
+      "width": 843,
+      "height": 308,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "06.jpg": [
+    {
+      "x": 0,
+      "y": 153,
+      "width": 268,
+      "height": 757,
+      "painting": "Madonna col Bambino e i santi Sebastiano e Giorgio (?) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "026.png"
+    },
+    {
+      "x": 417,
+      "y": 49,
+      "width": 415,
+      "height": 467,
+      "painting": "La Musica (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "052.png"
+    },
+    {
+      "x": 657,
+      "y": 351,
+      "width": 367,
+      "height": 457,
+      "painting": "L'Ebbrezza (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "058.png"
+    },
+    {
+      "x": 879,
+      "y": 157,
+      "width": 299,
+      "height": 387,
+      "painting": "La Conversazione (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "047.png"
+    },
+    {
+      "x": 1055,
+      "y": 409,
+      "width": 249,
+      "height": 369,
+      "painting": "La Seduzione (Figure allegoriche) Luteri Giovanni di Niccolo' detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "060.png"
+    },
+    {
+      "x": 1195,
+      "y": 245,
+      "width": 209,
+      "height": 319,
+      "painting": "L'Amore (o L'Abbraccio) (Figure allegoriche) Luteri Giovanni di Niccolo detto Dosso Dossi (Tramuschio (Mirandola)  1487 ca. - Ferrara  1542)",
+      "img": "067.png"
+    },
+    {
+      "x": 1445,
+      "y": 335,
+      "width": 169,
+      "height": 491,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1649,
+      "y": 289,
+      "width": 237,
+      "height": 517,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "07.jpg": [
+    {
+      "x": 0,
+      "y": 450,
+      "width": 178,
+      "height": 358,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 190,
+      "y": 593,
+      "width": 121,
+      "height": 226,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 441,
+      "y": 420,
+      "width": 86,
+      "height": 174,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 517,
+      "y": 377,
+      "width": 110,
+      "height": 196,
+      "painting": "Priapo insidia Lotide addormentata Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "084.png"
+    },
+    {
+      "x": 610,
+      "y": 318,
+      "width": 135,
+      "height": 234,
+      "painting": "Giove ed Europa Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "000.png"
+    },
+    {
+      "x": 748,
+      "y": 242,
+      "width": 177,
+      "height": 278,
+      "painting": "Vulcano  Minerva e Amore (La nascita di Erittonio) Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "070.png"
+    },
+    {
+      "x": 949,
+      "y": 143,
+      "width": 240,
+      "height": 334,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1223,
+      "y": 29,
+      "width": 350,
+      "height": 385,
+      "painting": "Strage dei figli di Niobe Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "038.png"
+    },
+    {
+      "x": 421,
+      "y": 611,
+      "width": 79,
+      "height": 194,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 493,
+      "y": 592,
+      "width": 105,
+      "height": 225,
+      "painting": "La dea Latona trasforma i contadini della Licia in rane Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "071.png"
+    },
+    {
+      "x": 593,
+      "y": 571,
+      "width": 137,
+      "height": 265,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 731,
+      "y": 539,
+      "width": 189,
+      "height": 317,
+      "painting": "Caduta di Fetonte Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "075.png"
+    },
+    {
+      "x": 939,
+      "y": 492,
+      "width": 264,
+      "height": 393,
+      "painting": "Piramo e Tisbe Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "088.png"
+    },
+    {
+      "x": 1245,
+      "y": 420,
+      "width": 383,
+      "height": 473,
+      "painting": "Il giudizio di Mida Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594)",
+      "img": "024.png"
+    }
+  ],
+  "08.jpg": [
+    {
+      "x": 756,
+      "y": 400,
+      "width": 318,
+      "height": 429,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 436,
+      "y": 483,
+      "width": 185,
+      "height": 306,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "09.jpg": [
+    {
+      "x": 1572,
+      "y": 458,
+      "width": 126,
+      "height": 222,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1722,
+      "y": 328,
+      "width": 198,
+      "height": 461,
+      "painting": "Giuditta con la testa di Oloferne Bertucci Giacomo detto Jacopone da Faenza (Faenza  1502 - 1579)",
+      "img": "061.png"
+    }
+  ],
+  "10.jpg": [],
+  "11.jpg": [
+    {
+      "x": 0,
+      "y": 287,
+      "width": 117,
+      "height": 327,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 289,
+      "y": 443,
+      "width": 195,
+      "height": 171,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 335,
+      "y": 225,
+      "width": 131,
+      "height": 163,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 435,
+      "y": 455,
+      "width": 155,
+      "height": 169,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 551,
+      "y": 247,
+      "width": 143,
+      "height": 191,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 729,
+      "y": 489,
+      "width": 113,
+      "height": 119,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 749,
+      "y": 303,
+      "width": 83,
+      "height": 137,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 903,
+      "y": 491,
+      "width": 87,
+      "height": 119,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 891,
+      "y": 327,
+      "width": 111,
+      "height": 143,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1023,
+      "y": 499,
+      "width": 67,
+      "height": 109,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1025,
+      "y": 367,
+      "width": 67,
+      "height": 115,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1197,
+      "y": 589,
+      "width": 69,
+      "height": 73,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1213,
+      "y": 497,
+      "width": 97,
+      "height": 75,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1161,
+      "y": 259,
+      "width": 143,
+      "height": 133,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1223,
+      "y": 523,
+      "width": 101,
+      "height": 77,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1225,
+      "y": 417,
+      "width": 97,
+      "height": 77,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1355,
+      "y": 515,
+      "width": 71,
+      "height": 91,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1339,
+      "y": 411,
+      "width": 105,
+      "height": 77,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1351,
+      "y": 241,
+      "width": 163,
+      "height": 135,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1477,
+      "y": 509,
+      "width": 79,
+      "height": 105,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1461,
+      "y": 405,
+      "width": 111,
+      "height": 83,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1807,
+      "y": 431,
+      "width": 51,
+      "height": 63,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1805,
+      "y": 515,
+      "width": 57,
+      "height": 91,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "12.jpg": [
+    {
+      "x": 631,
+      "y": 151,
+      "width": 715,
+      "height": 679,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "13.jpg": [
+    {
+      "x": 0,
+      "y": 43,
+      "width": 245,
+      "height": 1027,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 479,
+      "y": 0,
+      "width": 931,
+      "height": 1080,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1629,
+      "y": 0,
+      "width": 291,
+      "height": 1080,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "14.jpg": [
+    {
+      "x": 157,
+      "y": 133,
+      "width": 1613,
+      "height": 947,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "15.jpg": [
+    {
+      "x": 317,
+      "y": 15,
+      "width": 1179,
+      "height": 955,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "16.jpg": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 484,
+      "height": 922,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 505,
+      "y": 0,
+      "width": 785,
+      "height": 1070,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "17.jpg": [
+    {
+      "x": 351,
+      "y": 237,
+      "width": 353,
+      "height": 327,
+      "painting": "Ritratto di Maria Farnese d'Este Suttermans Justus (attr.) (Anversa  1597 - Firenze  1681)",
+      "img": "053.png"
+    },
+    {
+      "x": 779,
+      "y": 283,
+      "width": 317,
+      "height": 287,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1161,
+      "y": 243,
+      "width": 351,
+      "height": 331,
+      "painting": "Ritratto della principessa Anna Maria Maurizia d'Asburgo Pourbus Frans II il Giovane (Anversa  1569 - Parigi  1622)",
+      "img": "081.png"
+    },
+    {
+      "x": 243,
+      "y": 639,
+      "width": 705,
+      "height": 441,
+      "painting": "Ritratto di Quaranta Malvasia Sabatini Lorenzo (Bologna  1530 ca. - Roma  1576)",
+      "img": "035.png"
+    },
+    {
+      "x": 1097,
+      "y": 741,
+      "width": 499,
+      "height": 399,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1657,
+      "y": 697,
+      "width": 173,
+      "height": 305,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "18.jpg": [
+    {
+      "x": 205,
+      "y": 265,
+      "width": 1243,
+      "height": 645,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "19.jpg": [
+    {
+      "x": 369,
+      "y": 0,
+      "width": 849,
+      "height": 1080,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1387,
+      "y": 295,
+      "width": 533,
+      "height": 785,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "20.jpg": [
+    {
+      "x": 79,
+      "y": 0,
+      "width": 1609,
+      "height": 1064,
+      "painting": "La Regina Tomiri fa immergere nel sangue la testa di Ciro Ferrari Luca detto Luca da Reggio (Reggio Emilia  1599 - Padova  1654)",
+      "img": "044.png"
+    }
+  ],
+  "21.jpg": [
+    {
+      "x": 241,
+      "y": 88,
+      "width": 291,
+      "height": 777,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 740,
+      "y": 298,
+      "width": 321,
+      "height": 404,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1236,
+      "y": 320,
+      "width": 488,
+      "height": 337,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 655,
+      "y": 0,
+      "width": 480,
+      "height": 185,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 1233,
+      "y": 0,
+      "width": 487,
+      "height": 174,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "22.jpg": [
+    {
+      "x": 0,
+      "y": 79,
+      "width": 1080,
+      "height": 1167,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "23.jpg": [
+    {
+      "x": 31,
+      "y": 553,
+      "width": 997,
+      "height": 823,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "24.jpg": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 706,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "25.jpg": [
+    {
+      "x": 0,
+      "y": 212,
+      "width": 269,
+      "height": 259,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 108,
+      "y": 323,
+      "width": 173,
+      "height": 158,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 291,
+      "y": 287,
+      "width": 201,
+      "height": 182,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 519,
+      "y": 241,
+      "width": 242,
+      "height": 204,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 809,
+      "y": 179,
+      "width": 337,
+      "height": 243,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 99,
+      "y": 530,
+      "width": 131,
+      "height": 190,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 266,
+      "y": 536,
+      "width": 212,
+      "height": 184,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 548,
+      "y": 501,
+      "width": 168,
+      "height": 219,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 862,
+      "y": 473,
+      "width": 262,
+      "height": 247,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "26.jpg": [
+    {
+      "x": 0,
+      "y": 209,
+      "width": 187,
+      "height": 179,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 802,
+      "y": 0,
+      "width": 417,
+      "height": 513,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 719,
+      "y": 229,
+      "width": 57,
+      "height": 174,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "27.jpg": [
+    {
+      "x": 386,
+      "y": 38,
+      "width": 197,
+      "height": 169,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 110,
+      "y": 223,
+      "width": 306,
+      "height": 171,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 467,
+      "y": 238,
+      "width": 296,
+      "height": 177,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 821,
+      "y": 259,
+      "width": 283,
+      "height": 175,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 0,
+      "y": 437,
+      "width": 351,
+      "height": 268,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 426,
+      "y": 465,
+      "width": 347,
+      "height": 255,
+      "painting": "",
+      "img": ""
+    },
+    {
+      "x": 862,
+      "y": 483,
+      "width": 362,
+      "height": 237,
+      "painting": "",
+      "img": ""
+    }
+  ],
+  "28.jpg": [
+    {
+      "x": 366,
+      "y": 17,
+      "width": 518,
+      "height": 645,
+      "painting": "",
+      "img": "045.png"
+    }
+  ],
+  "29.jpg": [
+    {
+      "x": 789,
+      "y": 147,
+      "width": 190,
+      "height": 428,
+      "painting": "",
+      "img": "035.png"
+    },
+    {
+      "x": 1043,
+      "y": 74,
+      "width": 235,
+      "height": 528,
+      "painting": "",
+      "img": "019.png"
+    }
+  ],
+  "30.jpg": [
+    {
+      "x": 103,
+      "y": 182,
+      "width": 271,
+      "height": 212,
+      "painting": "",
+      "img": "020.png"
+    },
+    {
+      "x": 462,
+      "y": 175,
+      "width": 271,
+      "height": 213,
+      "painting": "",
+      "img": "073.png"
+    },
+    {
+      "x": 829,
+      "y": 161,
+      "width": 310,
+      "height": 229,
+      "painting": "",
+      "img": "051.png"
+    },
+    {
+      "x": 1232,
+      "y": 163,
+      "width": 295,
+      "height": 223,
+      "painting": "",
+      "img": "002.png"
+    },
+    {
+      "x": 47,
+      "y": 466,
+      "width": 297,
+      "height": 227,
+      "painting": "",
+      "img": "078.png"
+    },
+    {
+      "x": 430,
+      "y": 467,
+      "width": 297,
+      "height": 227,
+      "painting": "",
+      "img": "093.png"
+    },
+    {
+      "x": 833,
+      "y": 469,
+      "width": 287,
+      "height": 231,
+      "painting": "",
+      "img": "077.png"
+    },
+    {
+      "x": 1236,
+      "y": 471,
+      "width": 305,
+      "height": 236,
+      "painting": "",
+      "img": "062.png"
+    }
+  ],
+  "31.jpg": [
+    {
+      "x": 90,
+      "y": 0,
+      "width": 1064,
+      "height": 720,
+      "painting": "",
+      "img": "041.png"
+    }
+  ],
+  "32.jpg": [
+    {
+      "x": 70,
+      "y": 12,
+      "width": 343,
+      "height": 486,
+      "painting": "",
+      "img": "012.png"
+    }
+  ],
+  "33.jpg": [
+    {
+      "x": 871,
+      "y": 243,
+      "width": 662,
+      "height": 627,
+      "painting": "",
+      "img": "010.png"
+    },
+    {
+      "x": 1533,
+      "y": 481,
+      "width": 387,
+      "height": 423,
+      "painting": "",
+      "img": "005.png"
+    }
+  ],
+  "34.jpg": [
+    {
+      "x": 1165,
+      "y": 283,
+      "width": 386,
+      "height": 882,
+      "painting": "",
+      "img": "023.png"
+    },
+    {
+      "x": 1971,
+      "y": 39,
+      "width": 525,
+      "height": 1365,
+      "painting": "",
+      "img": "029.png"
+    }
+  ],
+  "35.jpg": [
+    {
+      "x": 94,
+      "y": 267,
+      "width": 486,
+      "height": 274,
+      "painting": "",
+      "img": "000.png"
+    },
+    {
+      "x": 637,
+      "y": 284,
+      "width": 436,
+      "height": 263,
+      "painting": "",
+      "img": "070.png"
+    }
+  ],
+  "36.jpg": [
+    {
+      "x": 395,
+      "y": 15,
+      "width": 892,
+      "height": 936,
+      "painting": "",
+      "img": "071.png"
+    }
+  ],
+  "37.jpg": [
+    {
+      "x": 170,
+      "y": 0,
+      "width": 971,
+      "height": 1051,
+      "painting": "",
+      "img": "088.png"
+    },
+    {
+      "x": 1162,
+      "y": 63,
+      "width": 613,
+      "height": 856,
+      "painting": "",
+      "img": "024.png"
+    }
+  ],
+  "38.jpg": [
+    {
+      "x": 100,
+      "y": 114,
+      "width": 529,
+      "height": 584,
+      "painting": "",
+      "img": "013.png"
+    },
+    {
+      "x": 710,
+      "y": 133,
+      "width": 439,
+      "height": 586,
+      "painting": "",
+      "img": "025.png"
+    }
+  ],
+  "39.jpg": [
+    {
+      "x": 290,
+      "y": 36,
+      "width": 413,
+      "height": 368,
+      "painting": "",
+      "img": "084.png"
+    },
+    {
+      "x": 771,
+      "y": 33,
+      "width": 391,
+      "height": 368,
+      "painting": "",
+      "img": "000.png"
+    },
+    {
+      "x": 1223,
+      "y": 36,
+      "width": 403,
+      "height": 363,
+      "painting": "",
+      "img": "070.png"
+    },
+    {
+      "x": 239,
+      "y": 483,
+      "width": 469,
+      "height": 486,
+      "painting": "",
+      "img": "071.png"
+    },
+    {
+      "x": 1232,
+      "y": 476,
+      "width": 455,
+      "height": 473,
+      "painting": "",
+      "img": "075.png"
+    }
+  ],
+  "40.jpg": [
+    {
+      "x": 259,
+      "y": 0,
+      "width": 964,
+      "height": 720,
+      "painting": "",
+      "img": "086.png"
+    }
+  ],
+  "41.jpg": [
+    {
+      "x": 311,
+      "y": 243,
+      "width": 600,
+      "height": 386,
+      "painting": "",
+      "img": "085.png"
+    }
+  ],
+  "42.jpg": [
+    {
+      "x": 557,
+      "y": 38,
+      "width": 454,
+      "height": 596,
+      "painting": "",
+      "img": "065.png"
+    }
+  ],
+  "43.jpg": [
+    {
+      "x": 818,
+      "y": 128,
+      "width": 424,
+      "height": 464,
+      "painting": "",
+      "img": "011.png"
+    }
+  ],
+  "44.jpg": [
+    {
+      "x": 553,
+      "y": 59,
+      "width": 725,
+      "height": 961,
+      "painting": "",
+      "img": "046.png"
+    }
+  ],
+  "45.jpg": [
+    {
+      "x": 215,
+      "y": 0,
+      "width": 835,
+      "height": 720,
+      "painting": "",
+      "img": "071.png"
+    }
+  ],
+  "46.jpg": [
+    {
+      "x": 692,
+      "y": 0,
+      "width": 2912,
+      "height": 2160,
+      "painting": "",
+      "img": "034.png"
+    }
+  ],
+  "47.jpg": [
+    {
+      "x": 640,
+      "y": 0,
+      "width": 2616,
+      "height": 2160,
+      "painting": "",
+      "img": "037.png"
+    }
+  ],
+  "48.jpg": [
+    {
+      "x": 59,
+      "y": 90,
+      "width": 534,
+      "height": 722,
+      "painting": "",
+      "img": "056.png"
+    }
+  ],
+  "49.jpg": [
+    {
+      "x": 15,
+      "y": 21,
+      "width": 1533,
+      "height": 923,
+      "painting": "",
+      "img": "005.png"
+    }
+  ],
+  "50.jpg": [
+    {
+      "x": 59,
+      "y": 21,
+      "width": 1679,
+      "height": 1059,
+      "painting": "",
+      "img": "044.png"
+    }
+  ],
+  "51.jpg": [
+    {
+      "x": 335,
+      "y": 0,
+      "width": 885,
+      "height": 1080,
+      "painting": "",
+      "img": "021.png"
+    }
+  ],
+  "52.jpg": [
+    {
+      "x": 197,
+      "y": 0,
+      "width": 1289,
+      "height": 1079,
+      "painting": "",
+      "img": "021.png"
+    }
+  ],
+  "53.jpg": [
+    {
+      "x": 0,
+      "y": 76,
+      "width": 610,
+      "height": 789,
+      "painting": "",
+      "img": "026.png"
+    }
+  ],
+  "54.jpg": [
+    {
+      "x": 0,
+      "y": 13,
+      "width": 523,
+      "height": 785,
+      "painting": "",
+      "img": "026.png"
+    }
+  ],
+  "55.jpg": [
+    {
+      "x": 7,
+      "y": 70,
+      "width": 583,
+      "height": 847,
+      "painting": "",
+      "img": "061.png"
+    }
+  ],
+  "56.jpg": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 609,
+      "height": 793,
+      "painting": "",
+      "img": "061.png"
+    }
+  ],
+  "57.jpg": [
+    {
+      "x": 132,
+      "y": 110,
+      "width": 360,
+      "height": 711,
+      "painting": "",
+      "img": "050.png"
+    }
+  ],
+  "58.jpg": [
+    {
+      "x": 144,
+      "y": 270,
+      "width": 254,
+      "height": 315,
+      "painting": "",
+      "img": "029.png"
+    }
+  ],
+  "59.jpg": [
+    {
+      "x": 61,
+      "y": 203,
+      "width": 424,
+      "height": 340,
+      "painting": "",
+      "img": "029.png"
+    }
+  ],
+  "60.jpg": [
+    {
+      "x": 78,
+      "y": 78,
+      "width": 401,
+      "height": 774,
+      "painting": "",
+      "img": "027.png"
+    }
+  ],
+  "61.jpg": [
+    {
+      "x": 75,
+      "y": 80,
+      "width": 402,
+      "height": 777,
+      "painting": "",
+      "img": "027.png"
+    }
+  ],
+  "62.jpg": [
+    {
+      "x": 104,
+      "y": 233,
+      "width": 298,
+      "height": 364,
+      "painting": "",
+      "img": "019.png"
+    }
+  ],
+  "63.jpg": [
+    {
+      "x": 51,
+      "y": 101,
+      "width": 426,
+      "height": 730,
+      "painting": "",
+      "img": "019.png"
+    }
+  ],
+  "64.jpg": [
+    {
+      "x": 107,
+      "y": 223,
+      "width": 396,
+      "height": 354,
+      "painting": "",
+      "img": "066.png"
+    }
+  ],
+  "65.jpg": [
+    {
+      "x": 441,
+      "y": 125,
+      "width": 897,
+      "height": 799,
+      "painting": "",
+      "img": "033.png"
+    }
+  ],
+  "66.jpg": [
+    {
+      "x": 363,
+      "y": 25,
+      "width": 1557,
+      "height": 925,
+      "painting": "",
+      "img": "005.png"
+    }
+  ],
+  "67.jpg": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 1134,
+      "height": 994,
+      "painting": "",
+      "img": "005.png"
+    }
+  ],
+  "68.jpg": [
+    {
+      "x": 494,
+      "y": 62,
+      "width": 426,
+      "height": 529,
+      "painting": "",
+      "img": "032.png"
+    }
+  ],
+  "69.jpg": [
+    {
+      "x": 508,
+      "y": 200,
+      "width": 200,
+      "height": 256,
+      "painting": "",
+      "img": "032.png"
+    }
+  ],
+  "70.jpg": [
+    {
+      "x": 299,
+      "y": 78,
+      "width": 577,
+      "height": 591,
+      "painting": "",
+      "img": "032.png"
+    }
+  ],
+  "71.jpg": [
+    {
+      "x": 456,
+      "y": 116,
+      "width": 331,
+      "height": 116,
+      "painting": "",
+      "img": "052.png"
+    }
+  ],
+  "72.jpg": [
+    {
+      "x": 606,
+      "y": 201,
+      "width": 421,
+      "height": 462,
+      "painting": "",
+      "img": "058.png"
+    }
+  ],
+  "73.jpg": [
+    {
+      "x": 480,
+      "y": 91,
+      "width": 269,
+      "height": 394,
+      "painting": "",
+      "img": "076.png"
+    }
+  ],
+  "74.jpg": [
+    {
+      "x": 473,
+      "y": 61,
+      "width": 728,
+      "height": 598,
+      "painting": "",
+      "img": "076.png"
+    }
+  ],
+  "75.jpg": [
+    {
+      "x": 448,
+      "y": 160,
+      "width": 394,
+      "height": 379,
+      "painting": "",
+      "img": "088.png"
+    },
+    {
+      "x": 808,
+      "y": 157,
+      "width": 286,
+      "height": 372,
+      "painting": "",
+      "img": "024.png"
+    }
+  ],
+  "76.jpg": [
+    {
+      "x": 86,
+      "y": 221,
+      "width": 273,
+      "height": 432,
+      "painting": "",
+      "img": "088.png"
+    },
+    {
+      "x": 402,
+      "y": 164,
+      "width": 454,
+      "height": 505,
+      "painting": "",
+      "img": "024.png"
+    }
+  ],
+  "77.jpg": [
+    {
+      "x": 472,
+      "y": 58,
+      "width": 570,
+      "height": 597,
+      "painting": "",
+      "img": "088.png"
+    }
+  ]
+}

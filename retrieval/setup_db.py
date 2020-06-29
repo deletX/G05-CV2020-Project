@@ -1,7 +1,11 @@
+import os
+
 import cv2
 import json
 
 # the painting list
+from paths import PROJ_ROOT, IMAGE_DB
+
 paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594),19,000.png',
              'Nerone davanti al corpo di Agrippina,Ferrari Luca detto Luca da Reggio (Reggio Emilia  1599 - Padova  1654),21,001.png',
              'Minerva,Venturini Gaspare (Ferrara  notizie dal 1576 al 1593),20,002.png',
@@ -100,7 +104,7 @@ paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1
              ]
 
 
-def create_painting_db(output_file='./paintings_descriptors.json', verbose=False):
+def create_painting_db(output_file=os.path.join(PROJ_ROOT, "retrieval", "paintings_descriptors.json"), verbose=False):
     """
     Compute the keypoints for each painting and create the databse.
 
@@ -125,7 +129,7 @@ def create_painting_db(output_file='./paintings_descriptors.json', verbose=False
         if verbose: print("Working on image: {}".format(image))
 
         # load the image from the database and compute SIFT keypoints and descriptors
-        img = cv2.imread('./paintings_db/' + image, cv2.IMREAD_UNCHANGED)
+        img = cv2.imread(os.path.join(IMAGE_DB, image), cv2.IMREAD_UNCHANGED)
 
         if verbose: print("     Computing descriptors")
         _, descriptors = sift.detectAndCompute(img, None)
@@ -146,7 +150,7 @@ def create_painting_db(output_file='./paintings_descriptors.json', verbose=False
 
     # store the list into a .json file
     with open(output_file, 'w') as f:
-        if verbose: print("Saving result into \"{}\"".format(output_file))
+        if verbose: print("Saving result into \"{}\"".format(os.path.relpath(output_file, PROJ_ROOT)))
         json.dump(painting_descriptors, f)
 
 

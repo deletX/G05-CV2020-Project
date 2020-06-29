@@ -1,7 +1,10 @@
+import os
+
 import cv2
 import numpy as np
 from math import sqrt
-from detection.threshold_ccl.threshold_ccl import run_frame
+from detection.painting.painting_detection import run_frame
+from paths import MSF_DATASET
 
 
 def crop(img, box):
@@ -47,7 +50,7 @@ def rect(frame, bboxes):
 
         edges = np.squeeze(bbox['approx'])
         for el in dst_pts:
-            # sort the painting vertices from the nearest to the furthest from the given bounding box vertice
+            # sort the painting vertices from the nearest to the furthest from the given bounding box vertex
             edges = sorted(edges, key=lambda v: sqrt((el[0] - v[0]) ** 2 + (el[1] - v[1]) ** 2))
             src_pts.append(edges[0])
 
@@ -81,12 +84,11 @@ def main():
     :return:
     """
     for img_i in range(1, 28):
-        original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(img_i),
-                              cv2.IMREAD_UNCHANGED)
+        original = cv2.imread(os.path.join(MSF_DATASET, "{0:0=2d}.jpg".format(i)), cv2.IMREAD_UNCHANGED)
         bbox_list, bbox_img = run_frame(original)
         out, bbox_list = rect(original, bbox_list)
-        cv2.imwrite("./output/{0:0=2d}.jpg".format(img_i), out)
+        cv2.imshow("result", out)
+        cv2.waitKey()
 
-
-if __name__ == "__main__":
-    main()
+        if __name__ == "__main__":
+            main()

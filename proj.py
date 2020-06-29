@@ -5,16 +5,18 @@ import os
 import cv2
 
 # import local packages
+import wget
+
 from detection.people.yolo_func import yolo_func
-from detection.threshold_ccl.threshold_ccl import run_frame
+from detection.painting.painting_detection import run_frame
 from localization.localization import localization
 from rectification.rectification import rect
 from retrieval.retrieval import retrieval, load_json_file_from_path
 from retrieval.setup_db import create_painting_db
+from paths import PROJ_ROOT, YOLO_WEIGHTS_PATH, YOLO_CFG_PATH
 
 
-def yolo_setup(weights_path="./detection/people/yolo-coco/yolov3.weights",
-               config_path="./detection/people/yolo-coco/yolov3.cfg"):
+def yolo_setup(weights_path=YOLO_WEIGHTS_PATH, config_path=YOLO_CFG_PATH, verbose=False):
     """
     Reads the weights and config files and prepares the network for the YOLO to run.
 
@@ -25,6 +27,9 @@ def yolo_setup(weights_path="./detection/people/yolo-coco/yolov3.weights",
     :return: Network and layer names for yolo
     :rtype: tuple
     """
+    if not os.path.exists(YOLO_WEIGHTS_PATH):
+        print("YOLO weights not found, you can find the link in the readme")
+        exit(-2)
     net = cv2.dnn.readNetFromDarknet(config_path, weights_path)
     ln = net.getLayerNames()
     ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
@@ -33,7 +38,7 @@ def yolo_setup(weights_path="./detection/people/yolo-coco/yolov3.weights",
 
 def show_and_wait(img):
     """
-    Debug function. Show an image and waits for a key
+    Debug function. Show an image and waits for a key press
 
     :param img: Image to be shown
     """
@@ -73,17 +78,18 @@ if __name__ == "__main__":
 
     # define skip for testing purposes
     skip = args["skip"]
-    if verbose: print("Analyzing 1 frame each {}".format(skip)) if skip > 0 else print("Analyzing all frames")
+    if verbose: print("Analyzing 1 frame each {}".format(skip)) if skip > 1 else print("Analyzing all frames")
 
     # YOLO setup
-    if verbose: print("Loading Yolo")
-    net, ln = yolo_setup()
+    if verbose: print("Loading Yolo...")
+    net, ln = yolo_setup(verbose=verbose)
 
     # retrieval setup, load db
-    if verbose: print("Loading painting descriptors")
-    if not os.path.exists("./retrieval/paintings_descriptors.json"):
-        create_painting_db("./retrieval/paintings_descriptors.json")
-    query_images = load_json_file_from_path("./retrieval/paintings_descriptors.json")
+    if verbose: print("Loading painting descriptors...")
+    if not os.path.exists(os.path.join(PROJ_ROOT, "retrieval", "./paintings_descriptors.json")):
+        if verbose: print("Descriptors not found, creating them...")
+        create_painting_db()
+    query_images = load_json_file_from_path(os.path.join(PROJ_ROOT, "retrieval", "paintings_descriptors.json"))
 
     # color definition
     painting_bbox_color = [255, 0, 0]
@@ -99,23 +105,23 @@ if __name__ == "__main__":
     person_descr_thick = 1
 
     # open input
-    if verbose: print("Opening input video")
+    if verbose: print("Opening input video...")
     cap = cv2.VideoCapture(args["input"])
     if not cap.isOpened():
-        print('Cannot open camera')
+        print('Cannot open camera :(')
         exit(-1)
 
     # retrieve capture parameters
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS)) / skip
-    fourcc = int(cap.get(cv2.CAP_PROP_FOURCC))
-    if verbose: print("Input details:\n - {}px\n - {}px\n - {}fps\n - {}".format(width, height, fps, fourcc))
+    if verbose: print("Input details:\n - {}px\n - {}px\n - {}fps".format(width, height, fps))
 
     # open output if defined
     if "output" in args:
-        if verbose: print("Creating output file {}".format(args["output"]))
-        out = cv2.VideoWriter(args["output"] + ".mp4v", cv2.VideoWriter_fourcc('d', 'i', 'v', 'x'), fps,
+        if verbose: print("Creating output file {}...".format(args["output"]))
+        out = cv2.VideoWriter(os.path.join(PROJ_ROOT, args["output"] + ".mp4v"),
+                              cv2.VideoWriter_fourcc('d', 'i', 'v', 'x'), fps,
                               (width, height))
 
     frame_cnt = 0
@@ -125,7 +131,6 @@ if __name__ == "__main__":
         if not ret:
             break
 
-        # for testing purposes skip 2 frames every 3
         if frame_cnt % skip != 0:
             if verbose: print("Skipping frame #{}".format(frame_cnt))
             frame_cnt += 1
@@ -135,8 +140,9 @@ if __name__ == "__main__":
         if verbose: print("Frame #{}".format(frame_cnt))
 
         # object detection
+        if verbose: print("Detecting paintings...")
         painting_bboxs, img_cnts = run_frame(frame)
-        if verbose: print("Identifying objects: {} paintings".format(len(painting_bboxs)))
+        if verbose: print("Detected {} paintings".format(len(painting_bboxs)))
         if debug: show_and_wait(img_cnts)
 
         # rectification
@@ -145,6 +151,7 @@ if __name__ == "__main__":
         if debug: show_and_wait(rect_frame)
 
         # retrieval
+        if verbose: print("Retrieving paintings from DB...")
         for bbox in painting_bboxs:
             results = retrieval(bbox["rect"], query_images)
 
@@ -159,21 +166,22 @@ if __name__ == "__main__":
                     "author": result[1],
                     "room": result[2]
                 }
-        if verbose: print("Retrieved paintings from db")
+        if verbose: print("Retrieved paintings from DB")
 
         # people detection
+        if verbose: print("Detecting people...")
         people_bboxs = yolo_func(frame.copy(), net, ln)
-        if verbose: print("Detecting people: {} people found".format(len(people_bboxs)))
+        if verbose: print("Detected {} people".format(len(people_bboxs)))
 
         # localization
         if len([bbox for bbox in painting_bboxs if "painting" in bbox]) > 0:
             room = localization(painting_bboxs)
         else:
             room = -1
-        if verbose: print("Room computed {}".format(room))
+        if verbose: print("Room computed: {}".format(room))
 
         # Drawing painting_bboxs
-        if verbose: print("Drawing")
+        if verbose: print("Drawing...")
         for bbox in painting_bboxs:
             # draw bbox
             (x, y, w, h) = (bbox["x"], bbox["y"], bbox["width"], bbox["height"])
@@ -207,6 +215,7 @@ if __name__ == "__main__":
             cv2.putText(rect_frame, descr, (x + person_descr_thick * 5, y + (person_descr_thick * 5)),
                         cv2.FONT_HERSHEY_COMPLEX, person_descr_size, person_descr_color, person_descr_thick)
 
+        if verbose: print("Exporting result...")
         # write resulting frame
         if "output" in args:
             out.write(rect_frame)
@@ -215,6 +224,7 @@ if __name__ == "__main__":
             cv2.waitKey(10)
 
     # destroy and release
+    if verbose: print("Releasing resources and exiting, this may take a while!")
     cv2.destroyAllWindows()
     cap.release()
     if "output" in args:

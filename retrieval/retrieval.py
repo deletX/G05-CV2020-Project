@@ -1,9 +1,11 @@
+import os
+
 import cv2
 import numpy as np
 import json
-from detection.threshold_ccl.threshold_ccl import run_frame
+from detection.painting.painting_detection import run_frame
+from paths import PROJ_ROOT, MSF_DATASET
 from rectification.rectification import rect
-from timeit import default_timer as timer
 
 
 def load_json_file_from_path(path):
@@ -31,7 +33,7 @@ def retrieval(detected_image, database):
     """
     sift = cv2.xfeatures2d.SIFT_create()
 
-    # we use the brute force matcher to match the detected_image to the ones in the databse
+    # we use the brute force matcher to match the detected_image to the ones in the database
     bf = cv2.BFMatcher(crossCheck=True)
     results = []
 
@@ -43,13 +45,7 @@ def retrieval(detected_image, database):
         db_image_dscs = np.asarray(db_image['descriptors'], dtype=np.float32)
         db_image_shape = db_image['shape']
 
-        # resize the given image as the db_image
-        # detected_image = cv2.resize(detected_image, (db_image_shape[0], db_image_shape[1]))
-
-        # convert the given image to gray
-        # detected_gray = cv2.cvtColor(detected_image, cv2.COLOR_RGB2GRAY)
-
-        # compute SIFT descriptors for the given image0
+        # compute SIFT descriptors for the given image
         _, detected_descriptors = sift.detectAndCompute(detected_image, mask=None)
 
         if detected_descriptors is not None:
@@ -66,27 +62,24 @@ def retrieval(detected_image, database):
 
 
 def main():
-    start = timer()
-    query_images = load_json_file_from_path("./paintings_descriptors.json")
-    end = timer()
-    print("Loading the painting descriptors databse took {}s".format(end - start))
-    start_overall = timer()
+    """
+    Main function used for testing purposes
+    :return:
+    """
+    query_images = load_json_file_from_path(os.path.join(PROJ_ROOT, "retrieval", "paintings_descriptors.json"))
+
     for i in range(1, 78):
         print("{0:0=2d}.jpg".format(i))
-        original = cv2.imread("../msf_lillo/{0:0=2d}.jpg".format(i),
-                              cv2.IMREAD_UNCHANGED)
+        original = cv2.imread(os.path.join(MSF_DATASET, "{0:0=2d}.jpg".format(i)), cv2.IMREAD_UNCHANGED)
+
         bbox_list, img = run_frame(original)
-        start = timer()
         rected, bbox_rect = rect(original, bbox_list)
-        end = timer()
-        print("Detection took {}s".format(end - start))
+
         for bbox in bbox_rect:
             train_image = bbox['rect']
             train_image = np.asarray(train_image, dtype=np.uint8)
-            start = timer()
             results = retrieval(train_image, query_images)
-            end = timer()
-            print("Retrieval took {}s".format(end - start))
+
             if results:
                 train_image = cv2.resize(train_image, (500, 500))
                 cv2.imshow('Image', train_image)
@@ -95,9 +88,6 @@ def main():
                                                                                   res[1], res[2], res[3]))
                 cv2.waitKey()
             cv2.destroyAllWindows()
-    end_overall = timer()
-    print("Whole process took: {}s\nAverage is {}s".format(end_overall - start_overall,
-                                                           (end_overall - start_overall) / 78))
 
 
 if __name__ == "__main__":
