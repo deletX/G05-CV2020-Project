@@ -5,8 +5,6 @@ import os
 import cv2
 
 # import local packages
-import wget
-
 from detection.people.yolo_func import yolo_func
 from detection.painting.painting_detection import run_frame
 from localization.localization import localization
