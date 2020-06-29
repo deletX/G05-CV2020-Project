@@ -1,8 +1,13 @@
 from __future__ import print_function
 from __future__ import division
+
+import os
+
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+
+from paths import PROJ_ROOT, IMAGE_DB
 
 
 def calc_hist(frame):
@@ -25,8 +30,10 @@ def calc_hist(frame):
     return hist_b, hist_g, hist_r
 
 
-def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV, gt_b="./hist_b.npy", gt_g="./hist_g.npy",
-                  gt_r="./hist_r.npy"):
+def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV,
+                  gt_b=os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_b.npy"),
+                  gt_g=os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_g.npy"),
+                  gt_r=os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_r.npy")):
     """
     Computes the average distance using the given method (default Kullback–Leibler divergence)
     of the three color histograms and the locally computed ones
@@ -42,7 +49,11 @@ def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV, gt_b="./his
     :return: average distance of the three histograms
     :rtype: float
     """
-    # load local histograms
+    # load local histograms, if they do not exists create them
+    if not (os.path.exists(gt_b) and os.path.exists(gt_g) and os.path.exists(gt_r)):
+        print("Average detection histogram not found, creating it now...")
+        create_average_hist()
+
     av_b = np.load(gt_b).astype(np.float32)
     av_g = np.load(gt_g).astype(np.float32)
     av_r = np.load(gt_r).astype(np.float32)
@@ -56,7 +67,7 @@ def hist_distance(hist_b, hist_g, hist_r, method=cv2.HISTCMP_KL_DIV, gt_b="./his
     return (dist_b + dist_g + dist_r) / 3
 
 
-def main():
+def create_average_hist():
     """
     Creates the ground truth histogram and saves them locally
 
@@ -70,8 +81,7 @@ def main():
 
     # loop over each given painting picture in the databse
     for i in range(0, 95):
-        original = cv2.imread("../../retrieval/paintings_db/{0:0=3d}.png".format(i),
-                              cv2.IMREAD_UNCHANGED)
+        original = cv2.imread(os.path.join(IMAGE_DB, "{0:0=3d}.png".format(i)), cv2.IMREAD_UNCHANGED)
 
         # split bgr_planes
         bgr_planes = cv2.split(original)
@@ -98,13 +108,13 @@ def main():
     plt.subplot(221), plt.plot(img_b)
     plt.subplot(222), plt.plot(img_g)
     plt.subplot(223), plt.plot(img_r)
-    plt.show()
+    plt.savefig(os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "bgr_avg.png"))
 
     # save histograms
-    np.save("./hist_b", img_b)
-    np.save("./hist_g", img_g)
-    np.save("./hist_r", img_r)
+    np.save(os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_b.npy"), img_b)
+    np.save(os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_g.npy"), img_g)
+    np.save(os.path.join(PROJ_ROOT, "preprocessing", "avg_histogram", "hist_r.npy"), img_r)
 
 
 if __name__ == "__main__":
-    main()
+    create_average_hist()
