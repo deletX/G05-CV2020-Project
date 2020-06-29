@@ -113,7 +113,11 @@ if __name__ == "__main__":
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS)) / skip
-    if verbose: print("Input details:\n - {}px\n - {}px\n - {}fps".format(width, height, fps))
+    length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if verbose: print(
+        "Input details:\n - {}px\n - {}px\n - {}fps\n{} frames\nExpected duration: {}s".format(width, height, fps,
+                                                                                               length,
+                                                                                               length * 8 / skip))
 
     # open output if defined
     if "output" in args:
