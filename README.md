@@ -10,6 +10,7 @@ Options:
  - `-d` or `--debug` will enable debug-mode
 
 ## Setup
+The code is found under the `code` folder.
 Require python modules are found in `requirements.txt` and therefore can be installed with `pip install -r requirements.txt` 
 
 The only file that we were not able to re-create or retrieve during runtime are YOLO network weights,
@@ -17,12 +18,14 @@ that must be downloaded [here](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlU
 
 ## Output
 The output of the project consists in:
-    1 - an output video in which we annotate:
-        - For each painting bbox, the ROI containing the rectified version of the original painting and the indication of the first retrieved db painting
-        - For each person, the ROI with the indication of the relative room
-    2 - A terminal output in which we print:
-        - The description of what the program is processing(ONLY IF VERBOSE MODE IS ACTIVATED)
-        - For each frame, and for each painting detected, the indication of the entire result of the ranked list retrieved(ALWAYS) 
+1. An output video in which we annotate:
+    - For each painting bounding box, the ROI containing the rectified version of the original painting and the indication of the first retrieved db painting
+    - For each person, the ROI with the indication of the relative room
+2. A terminal output in which we print:
+    - The description of what the program is processing (ONLY IF VERBOSE MODE IS ACTIVATED)
+    - For each frame, and for each painting detected, the indication of the corresponding bounding box and the entire result of the ranked list retrieved (ALWAYS) 
+    - For each frame, and for each person detected, the indication of the corresponding bounding box (ALWAYS)
+    - For each frame the detected room (ALWAYS)
  
 ## Paper
 Detail of the pipline can be found inside the [paper document](./Gambelli_Gavioli_Glorio_g05_project_paper.pdf)
