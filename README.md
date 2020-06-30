@@ -22,3 +22,6 @@ Detail of the pipline can be found inside the [paper document](./Gambelli_Gaviol
 These will open youtube videos
 ### Example video #1
 [![Example Video 1](https://img.youtube.com/vi/76wbWCvVGRY/0.jpg)](https://www.youtube.com/watch?v=76wbWCvVGRY)
+
+### Example video #2
+[![Example Video 2](https://img.youtube.com/vi/aPo2egg-6tc/0.jpg)](https://www.youtube.com/watch?v=aPo2egg-6tc)
