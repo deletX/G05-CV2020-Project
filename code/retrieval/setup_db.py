@@ -1,11 +1,9 @@
 import os
-
 import cv2
 import json
+from code.paths import PROJ_ROOT, IMAGE_DB
 
 # the painting list
-from paths import PROJ_ROOT, IMAGE_DB
-
 paintings = ['Giove ed Europa,Robusti Jacopo detto Tintoretto (Venezia  1518 - 1594),19,000.png',
              'Nerone davanti al corpo di Agrippina,Ferrari Luca detto Luca da Reggio (Reggio Emilia  1599 - Padova  1654),21,001.png',
              'Minerva,Venturini Gaspare (Ferrara  notizie dal 1576 al 1593),20,002.png',

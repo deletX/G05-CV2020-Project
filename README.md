@@ -2,19 +2,20 @@
 To run use the command `python proj.py`
 
 Options:
- - _[Required]_ `-i` or `--input` followed by the `<filename>` of the input file
- - `-o` or `-output` followed by the `<filename>` of the desired otput file without extension. 
+ - _[Required]_ `-i` or `--input` followed by the path of the input file
+ - `-o` or `--output` followed by the path of the desired output file without extension. 
  If it is not defined the result will be shown in a window.
  - `-v` or `--verbose`, if defined will run the project in verbose mode
- - `-s` or `--skip` followed by a number defines the number to frame to skip, for example if value is 3 it will analyze 1 frame each 3.
+ - `-s` or `--skip` followed by a number defines the number to frame to skip - 1. For example if value is 3 it will analyze 1 frame each 3.
  - `-d` or `--debug` will enable debug-mode
 
 ## Setup
 The code is found under the `code` folder.
-Require python modules are found in `requirements.txt` and therefore can be installed with `pip install -r requirements.txt` 
+
+Required python modules are found in `code/requirements.txt` and therefore can be installed with `pip install -r requirements.txt`
 
 The only file that we were not able to re-create or retrieve during runtime are YOLO network weights,
-that must be downloaded [here(our drive)](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) or [here(developer site)](https://pjreddie.com/media/files/yolov3.weights) and put into `detection/people/yolo-coco/`.
+that must be downloaded [here(our drive)](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) or [here(developer site)](https://pjreddie.com/media/files/yolov3.weights) and put into `code/detection/people/yolo-coco/`.
 
 ## Output
 The output of the project consists in:

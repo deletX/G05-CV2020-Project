@@ -105,10 +105,11 @@ celerybeat.pid
 .env
 .venv
 env/
-venv/
+code/venv/
 ENV/
 env.bak/
 venv.bak/
+./venv
 
 # Spyder project settings
 .spyderproject
@@ -129,7 +130,7 @@ dmypy.json
 .pyre/
 
 .vscode/
-project_material/
+code/project_material/
 
 # User-specific stuff
 .idea
@@ -200,14 +201,15 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
-/detection/canny_hough/VID_20180529_113001.mp4
-/detection/canny_hough/VIRB0401.MP4
-/detection/canny_hough/VIRB0406.MP4
-/detection/canny_hough/VIRB0426.MP4
-/detection/canny_hough/GOPR2050.MP4
-/detection/canny_hough/GOPR1940.MP4
-/detection/canny_hough/GOPR1928.MP4
-/detection/canny_hough/GOPR1924.MP4
-/detection/canny_hough/GOPR1923.MP4
-/detection/canny_hough/output/GOPR1924.MP4
-/detection/people/yolo-coco/yolov3.weights
+/code/detection/canny_hough/VID_20180529_113001.mp4
+/code/detection/canny_hough/VIRB0401.MP4
+/code/detection/canny_hough/VIRB0406.MP4
+/code/detection/canny_hough/VIRB0426.MP4
+/code/detection/canny_hough/GOPR2050.MP4
+/code/detection/canny_hough/GOPR1940.MP4
+/code/detection/canny_hough/GOPR1928.MP4
+/code/detection/canny_hough/GOPR1924.MP4
+/code/detection/canny_hough/GOPR1923.MP4
+/code/detection/canny_hough/output/GOPR1924.MP4
+/code/detection/people/yolo-coco/yolov3.weights
+/venv/

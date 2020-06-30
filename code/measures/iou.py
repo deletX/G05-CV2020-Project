@@ -1,10 +1,10 @@
 import os
 from statistics import mean
-from detection.painting.painting_detection import run_frame
+from code.detection.painting.painting_detection import run_frame
 import cv2
 import json
 
-from paths import MSF_DATASET
+from code.paths import MSF_DATASET
 
 
 def setup():

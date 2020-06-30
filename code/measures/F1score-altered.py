@@ -1,12 +1,12 @@
 import os
 
 import cv2
-from measures.iou import __iou__
-from detection.painting.painting_detection import run_frame
-from paths import PROJ_ROOT, MSF_DATASET
-from rectification.rectification import rect
-from retrieval.retrieval import retrieval, load_json_file_from_path
-from retrieval.setup_db import create_painting_db
+from code.measures.iou import __iou__
+from code.detection.painting.painting_detection import run_frame
+from code.paths import PROJ_ROOT, MSF_DATASET
+from code.rectification.rectification import rect
+from code.retrieval.retrieval import retrieval, load_json_file_from_path
+from code.retrieval.setup_db import create_painting_db
 
 
 def setup():
@@ -48,14 +48,15 @@ def setup():
 
 def main():
     """
-    Compute the Accuracy for retrieval
+    Compute the F1-score on the labeled dataset
 
     :return:
     """
     # run the detection, rectification and retreival
     dic = setup()
-    trues = 0
-    total = 0
+    TP = 0
+    FP = 0
+    FN = 0
 
     # load the ground truth
     ground_truth = load_json_file_from_path(os.path.join(MSF_DATASET, "bbox_painting.json"))
@@ -83,13 +84,29 @@ def main():
                               (bbox['x'] + bbox['width'], bbox['y'] + bbox['height']), (255, 255, 255), 10)
                 iou = __iou__(gt_bbox, bbox)
 
-                if iou > 0.5 and gt_bbox["img"] != "":
-                    if gt_bbox["img"] == bbox["results"][0][3]:
-                        trues += 1
-                    total += 1
+                if iou > 0.5:
 
-    print("Accuracy: {}".format(trues / total)) if total != 0 else print("No values found")
-    return trues / total if total != 0 else -1
+                    if gt_bbox["img"] == "" or gt_bbox["img"] == bbox["results"][0][3]:
+                        # a true positive is so if it has at least .5 iou and,
+                        # if it is in the db, the retrieval is correct
+                        TP += 1
+                        gt_bbox["detected"] = True
+                    else:
+                        FP += 1
+                else:
+                    FP += 1
+    # measure the false negatives
+    for key in ground_truth:
+        if key in ["{0:0=2d}.jpg".format(i) for i in range(1, 78)]:
+            for item in ground_truth[key]:
+                if not item["detected"]:
+                    FN += 1
+
+    # compute precision recall and F1
+    p = TP / (TP + FP)
+    r = TP / (TP + FN)
+    F1 = 2 * (p * r) / (p + r)
+    print("Precision: {} \nRecall: {}\nF1-score: {}".format(p, r, F1))
 
 
 if __name__ == "__main__":

@@ -3,9 +3,9 @@ import os
 import cv2
 import numpy as np
 import json
-from detection.painting.painting_detection import run_frame
-from paths import PROJ_ROOT, MSF_DATASET
-from rectification.rectification import rect
+from code.detection.painting.painting_detection import run_frame
+from code.paths import PROJ_ROOT, MSF_DATASET
+from code.rectification.rectification import rect
 
 
 def load_json_file_from_path(path):

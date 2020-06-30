@@ -5,16 +5,16 @@ import os
 import cv2
 
 # import local packages
-from detection.people.yolo_func import yolo_func
-from detection.painting.painting_detection import run_frame
-from localization.localization import localization
-from rectification.rectification import rect
-from retrieval.retrieval import retrieval, load_json_file_from_path
-from retrieval.setup_db import create_painting_db
-from paths import PROJ_ROOT, YOLO_WEIGHTS_PATH, YOLO_CFG_PATH
+from code.detection.people.yolo_func import yolo_func
+from code.detection.painting.painting_detection import run_frame
+from code.localization.localization import localization
+from code.rectification.rectification import rect
+from code.retrieval.retrieval import retrieval, load_json_file_from_path
+from code.retrieval.setup_db import create_painting_db
+from code.paths import PROJ_ROOT, YOLO_WEIGHTS_PATH, YOLO_CFG_PATH
 
 
-def yolo_setup(weights_path=YOLO_WEIGHTS_PATH, config_path=YOLO_CFG_PATH, verbose=False):
+def yolo_setup(weights_path=YOLO_WEIGHTS_PATH, config_path=YOLO_CFG_PATH):
     """
     Reads the weights and config files and prepares the network for the YOLO to run.
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     # YOLO setup
     if verbose: print("Loading Yolo...")
-    net, ln = yolo_setup(verbose=verbose)
+    net, ln = yolo_setup()
 
     # retrieval setup, load db
     if verbose: print("Loading painting descriptors...")
@@ -122,7 +122,7 @@ if __name__ == "__main__":
     # open output if defined
     if "output" in args:
         if verbose: print("Creating output file {}...".format(args["output"]))
-        out = cv2.VideoWriter(os.path.join(PROJ_ROOT, args["output"] + ".mp4v"),
+        out = cv2.VideoWriter(args["output"] + ".mp4v",
                               cv2.VideoWriter_fourcc('d', 'i', 'v', 'x'), fps,
                               (width, height))
 
@@ -139,7 +139,9 @@ if __name__ == "__main__":
             continue
         else:
             frame_cnt += 1
-        if verbose: print("Frame #{}".format(frame_cnt))
+
+        print("-------------------------")
+        print("Frame #{}".format(frame_cnt))
 
         # object detection
         if verbose: print("Detecting paintings...")
@@ -168,6 +170,8 @@ if __name__ == "__main__":
                     "author": result[1],
                     "room": result[2]
                 }
+                bbox["list"] = results
+
         if verbose: print("Retrieved paintings from DB")
 
         # people detection
@@ -214,10 +218,37 @@ if __name__ == "__main__":
             descr = "Room: {}".format(room if room > 0 else "?")
 
             # draw description
-            cv2.putText(rect_frame, descr, (x + person_descr_thick * 5, y + (person_descr_thick * 5)),
+            cv2.putText(rect_frame, descr, (x + 20, y + 20),
                         cv2.FONT_HERSHEY_COMPLEX, person_descr_size, person_descr_color, person_descr_thick)
 
         if verbose: print("Exporting result...")
+
+        # print the results as per the project requirements
+        print("\tPaintings:")
+        if len(painting_bboxs) > 0:
+            for bbox in painting_bboxs:
+                (x, y, w, h) = (bbox["x"], bbox["y"], bbox["width"], bbox["height"])
+                bbox_dict = {'x': x, 'y': y, 'w': w, 'h': h}
+                print("\t\t{}".format(bbox_dict))
+                print("\t\t\tRetrieval ranked list:")
+                if "list" in bbox:
+                    for i, result in enumerate(bbox["list"]):
+                        print('\t\t\t\t{}) Title: {}, Author: {}, Room: {}'.format(i + 1, result[0],
+                                                                                   result[1], result[2], result[3]))
+                else:
+                    print('\t\t\t\tNone')
+        else:
+            print("\t\tNone")
+        print("\tPeoples:")
+        if len(people_bboxs) > 0:
+            for bbox in people_bboxs:
+                (x, y, w, h) = (bbox["x"], bbox["y"], bbox["width"], bbox["height"])
+                bbox_dict = {'x': x, 'y': y, 'w': w, 'h': h}
+                print("\t\t{}".format(bbox_dict))
+        else:
+            print("\t\tNone")
+        print("\tRoom: {}".format(room if room > 0 else "?"))
+
         # write resulting frame
         if "output" in args:
             out.write(rect_frame)

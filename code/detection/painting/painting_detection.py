@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 import json
 
-from preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
-from paths import VIDEOS_ROOT, MSF_DATASET
+from code.preprocessing.avg_histogram.avg_histogram import hist_distance, calc_hist
+from code.paths import VIDEOS_ROOT, MSF_DATASET
 
 
 def run_frame(frame):

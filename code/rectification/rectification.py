@@ -3,8 +3,8 @@ import os
 import cv2
 import numpy as np
 from math import sqrt
-from detection.painting.painting_detection import run_frame
-from paths import MSF_DATASET
+from code.detection.painting.painting_detection import run_frame
+from code.paths import MSF_DATASET
 
 
 def crop(img, box):

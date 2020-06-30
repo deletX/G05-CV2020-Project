@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-from paths import PROJ_ROOT, IMAGE_DB
+from code.paths import PROJ_ROOT, IMAGE_DB
 
 
 def calc_hist(frame):
