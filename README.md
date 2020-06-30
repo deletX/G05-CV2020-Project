@@ -25,3 +25,12 @@ These will open youtube videos
 
 ### Example video #2
 [![Example Video 2](https://img.youtube.com/vi/aPo2egg-6tc/0.jpg)](https://www.youtube.com/watch?v=aPo2egg-6tc)
+
+### Example video #3
+[![Example Video 2](https://img.youtube.com/vi/W2iwnYzL37U/0.jpg)](https://www.youtube.com/watch?v=W2iwnYzL37U)
+
+### Example video #4
+[![Example Video 2](https://img.youtube.com/vi/VaQ0EZ9viMM/0.jpg)](https://www.youtube.com/watch?v=VaQ0EZ9viMM)
+
+### Example video #5
+[![Example Video 2](https://img.youtube.com/vi/BMh_mPzDwG4/0.jpg)](https://www.youtube.com/watch?v=BMh_mPzDwG4)
