@@ -14,7 +14,7 @@ The code is found under the `code` folder.
 Require python modules are found in `requirements.txt` and therefore can be installed with `pip install -r requirements.txt` 
 
 The only file that we were not able to re-create or retrieve during runtime are YOLO network weights,
-that must be downloaded [here](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) and put into `detection/people/yolo-coco/`.
+that must be downloaded [here(our drive)](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) or [here(developer site)](https://pjreddie.com/media/files/yolov3.weights) and put into `detection/people/yolo-coco/`.
 
 ## Output
 The output of the project consists in:
