@@ -15,6 +15,15 @@ Require python modules are found in `requirements.txt` and therefore can be inst
 The only file that we were not able to re-create or retrieve during runtime are YOLO network weights,
 that must be downloaded [here](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlUU0BNB1cIyoTHkwI6/view?usp=sharing) and put into `detection/people/yolo-coco/`.
 
+## Output
+The output of the project consists in:
+    1 - an output video in which we annotate:
+        - For each painting bbox, the ROI containing the rectified version of the original painting and the indication of the first retrieved db painting
+        - For each person, the ROI with the indication of the relative room
+    2 - A terminal output in which we print:
+        - The description of what the program is processing(ONLY IF VERBOSE MODE IS ACTIVATED)
+        - For each frame, and for each painting detected, the indication of the entire result of the ranked list retrieved(ALWAYS) 
+ 
 ## Paper
 Detail of the pipline can be found inside the [paper document](./Gambelli_Gavioli_Glorio_g05_project_paper.pdf)
 
