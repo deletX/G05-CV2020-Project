@@ -17,3 +17,8 @@ that must be downloaded [here](https://drive.google.com/file/d/1kQ29lFhHEGQrKqlU
 
 ## Paper
 Detail of the pipline can be found inside the [paper document](./Gambelli_Gavioli_Glorio_g05_project_paper.pdf)
+
+## Example videos
+These will open youtube videos
+### Example video #1
+[![Example Video 1](https://img.youtube.com/vi/76wbWCvVGRY/0.jpg)](https://www.youtube.com/watch?v=76wbWCvVGRY)
